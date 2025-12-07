@@ -9,7 +9,7 @@ export interface PhotosuiteInitOptions {
   glightboxJsUrl?: string;
 }
 
-export function initPhotosuite(opts: PhotosuiteInitOptions = {}) {
+export function photosuite(opts: PhotosuiteInitOptions = {}) {
   const selector = opts.selector ?? "a.glightbox";
   const gallery = opts.gallery ?? "markdown";
   const enableLightbox = opts.glightbox ?? true;
@@ -42,4 +42,17 @@ export function initPhotosuite(opts: PhotosuiteInitOptions = {}) {
 
   if (document.readyState === "complete" || document.readyState === "interactive") start();
   else document.addEventListener("DOMContentLoaded", start);
+}
+
+export default function astroPhotosuite(options: Record<string, unknown> = {}) {
+  return {
+    name: "photosuite",
+    hooks: {
+      "astro:config:setup": ({ injectScript }: any) => {
+        const code = `import { photosuite } from 'photosuite';
+photosuite(${JSON.stringify(options)});`;
+        injectScript("page", code);
+      },
+    },
+  };
 }

@@ -1,7 +1,7 @@
 import './style.css'
-import { initPhotosuite } from './index'
+import { photosuite } from './index'
 
-initPhotosuite({
+photosuite({
   glightbox: false,
   imageAlts: true,
   exif: true,

@@ -3,6 +3,18 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "main": "dist/photosuite.cjs",
+  "module": "dist/photosuite.es",
+  "exports": {
+    ".": {
+      "import": "./dist/photosuite.es",
+      "require": "./dist/photosuite.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

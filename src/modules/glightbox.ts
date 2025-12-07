@@ -53,8 +53,8 @@ function loadJs(src: string): Promise<void> {
 export async function initGlightboxModule(opts: GlightboxModuleOptions) {
   const selector = opts.selector;
   const gallery = opts.gallery;
-  const cssUrl = opts.cssUrl || "https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css";
-  const jsUrl = opts.jsUrl || "https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js";
+  const cssUrl = opts.cssUrl || "https://cos.lhasa.icu/dist/glightbox/glightbox.min.css";
+  const jsUrl = opts.jsUrl || "https://cos.lhasa.icu/dist/glightbox/glightbox.min.js";
 
   const imgs = Array.from(document.querySelectorAll("img"));
   imgs.forEach((el) => {
