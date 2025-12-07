@@ -1,3 +1,4 @@
+import './styles/common.scss'
 export interface PhotosuiteInitOptions {
   selector?: string;
   gallery?: string;

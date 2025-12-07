@@ -1,0 +1,15 @@
+$ps-caption-size: 12px;
+$ps-caption-color: #fff;
+$ps-exif-size: 12px;
+$ps-exif-color: #fff;
+$ps-exif-bg: linear-gradient(to bottom, rgba(0, 0, 0, .6), transparent);
+$ps-caption-bg: linear-gradient(to right, rgba(0, 0, 0, .8), transparent);
+
+:root {
+  --photosuite-caption-size: #{$ps-caption-size};
+  --photosuite-caption-color: #{$ps-caption-color};
+  --photosuite-exif-size: #{$ps-exif-size};
+  --photosuite-exif-color: #{$ps-exif-color};
+  --photosuite-exif-bg: #{$ps-exif-bg};
+  --photosuite-caption-bg: #{$ps-caption-bg};
+}

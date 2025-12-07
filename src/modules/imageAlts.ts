@@ -1,23 +1,23 @@
 export async function enableImageAlts(selector: string) {
-  await import("../styles/image-alts.css");
+  await import("../styles/image-alts.scss");
   const anchors = Array.from(document.querySelectorAll(selector));
   anchors.forEach((a) => {
     const parent = a.parentElement as HTMLElement | null;
     if (!parent) return;
-    if (parent.tagName.toLowerCase() !== "figure") {
-      const figure = document.createElement("figure");
-      figure.className = "photosuite-figure";
-      parent.replaceChild(figure, a);
-      figure.appendChild(a);
+    if (!parent.classList.contains("photosuite-item")) {
+      const wrapper = document.createElement("div");
+      wrapper.className = "photosuite-item";
+      parent.replaceChild(wrapper, a);
+      wrapper.appendChild(a);
     }
     const img = a.querySelector("img");
     if (!img) return;
     const altText = String(img.getAttribute("alt") || "").trim();
     if (!altText) return;
-    const existing = (a.parentElement as Element).querySelector(".photosuite-figcaption");
+    const existing = (a.parentElement as Element).querySelector(".photosuite-caption");
     if (existing) return;
-    const cap = document.createElement("figcaption");
-    cap.className = "photosuite-figcaption";
+    const cap = document.createElement("div");
+    cap.className = "photosuite-caption";
     cap.textContent = altText;
     (a.parentElement as Element).appendChild(cap);
   });
@@ -28,17 +28,17 @@ export async function enableImageAlts(selector: string) {
     const isAnchor = p && p.tagName.toLowerCase() === "a" && p.classList.contains("glightbox");
     if (isAnchor) return;
     if (!p) return;
-    if (p.tagName.toLowerCase() !== "figure") {
-      const figure = document.createElement("figure");
-      figure.className = "photosuite-figure";
-      p.replaceChild(figure, img);
-      figure.appendChild(img);
+    if (!p.classList.contains("photosuite-item")) {
+      const wrapper = document.createElement("div");
+      wrapper.className = "photosuite-item";
+      p.replaceChild(wrapper, img);
+      wrapper.appendChild(img);
       const altText = String(img.getAttribute("alt") || "").trim();
       if (!altText) return;
-      const cap = document.createElement("figcaption");
-      cap.className = "photosuite-figcaption";
+      const cap = document.createElement("div");
+      cap.className = "photosuite-caption";
       cap.textContent = altText;
-      figure.appendChild(cap);
+      wrapper.appendChild(cap);
     }
   });
 }

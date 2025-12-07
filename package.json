@@ -9,7 +9,8 @@
     ".": {
       "import": "./dist/photosuite.es",
       "require": "./dist/photosuite.cjs"
-    }
+    },
+    "./dist/photosuite.css": "./dist/photosuite.css"
   },
   "files": [
     "dist",
@@ -24,6 +25,7 @@
     "@tailwindcss/postcss": "^4.1.17",
     "autoprefixer": "^10.4.22",
     "postcss": "^8.5.6",
+    "sass": "^1.94.2",
     "tailwindcss": "^4.1.17",
     "typescript": "~5.9.3",
     "vite": "npm:rolldown-vite@7.2.5"

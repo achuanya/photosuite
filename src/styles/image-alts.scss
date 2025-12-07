@@ -1,0 +1,32 @@
+.photosuite-item {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.photosuite-item > a {
+  display: block;
+}
+
+/* img reset moved to common.scss to avoid duplication */
+
+.photosuite-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 10px;
+  box-sizing: border-box;
+  z-index: 1;
+  font-size: var(--photosuite-caption-size) !important;
+  color: var(--photosuite-caption-color) !important;
+  line-height: 1;
+  font-weight: normal;
+  font-style: normal;
+  background: var(--photosuite-caption-bg);
+}

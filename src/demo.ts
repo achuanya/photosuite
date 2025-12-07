@@ -2,7 +2,7 @@ import './style.css'
 import { photosuite } from './index'
 
 photosuite({
-  glightbox: false,
+  glightbox: true,
   imageAlts: true,
   exif: true,
   glightboxOptions: {

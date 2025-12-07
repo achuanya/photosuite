@@ -1,0 +1,35 @@
+.photosuite-item {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  line-height: 0;
+}
+
+/* img reset moved to common.scss to avoid duplication */
+
+.photosuite-exif {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  box-sizing: border-box;
+  z-index: 1;
+  font-size: var(--photosuite-exif-size) !important;
+  color: var(--photosuite-exif-color) !important;
+  line-height: 1;
+  font-weight: normal;
+  font-style: normal;
+  background: var(--photosuite-exif-bg);
+  opacity: 0;
+  transition: opacity .2s ease-in-out;
+  pointer-events: none;
+}
+
+.photosuite-item:hover .photosuite-exif {
+  opacity: 1;
+}
