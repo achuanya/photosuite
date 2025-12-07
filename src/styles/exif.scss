@@ -1,5 +1,9 @@
-/* img reset moved to common.scss to avoid duplication */
+/**
+ * @file exif.scss
+ * @description EXIF 信息条的样式定义
+ */
 
+/* 共享的图片样式重置，避免重复定义 */
 .photosuite-exif {
   position: absolute;
   left: 0;
@@ -20,9 +24,10 @@
   background: var(--photosuite-exif-bg);
   opacity: 0;
   transition: opacity .2s ease-in-out;
-  pointer-events: none;
+  pointer-events: none; /* 避免遮挡下方元素的点击事件 */
 }
 
+/* 鼠标悬停时显示 EXIF 信息 */
 .photosuite-item:hover .photosuite-exif {
   opacity: 1;
 }

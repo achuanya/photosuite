@@ -1,6 +1,11 @@
+/**
+ * @file common.scss
+ * @description Photosuite 的通用样式，包括基础重置和容器样式
+ */
+
 @use './variables';
 
-/* Shared image reset across Photosuite scopes to avoid duplication */
+/* 共享的图片样式重置，避免重复定义 */
 :where(.photosuite-item img) {
   margin: 0 !important;
   padding: 0 !important;
@@ -11,6 +16,7 @@
   box-shadow: none !important;
 }
 
+/* 图片容器样式，设置为相对定位以便放置绝对定位的子元素（如 EXIF 和标题） */
 .photosuite-item {
   position: relative;
   display: inline-block;

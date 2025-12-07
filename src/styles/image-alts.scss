@@ -1,9 +1,13 @@
+/**
+ * @file image-alts.scss
+ * @description 图片标题的样式定义
+ */
+
 .photosuite-item > a {
   display: block;
 }
 
-/* img reset moved to common.scss to avoid duplication */
-
+/* 共享的图片样式重置，避免重复定义 */
 .photosuite-caption {
   position: absolute;
   left: 0;

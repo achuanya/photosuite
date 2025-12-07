@@ -1,22 +1,24 @@
-import { ensurePhotosuiteContainer, ensureExif } from "./dom";
+/**
+ * @file exif.ts
+ * @description EXIF 模块，负责启用和管理图片的 EXIF 信息显示功能
+ */
 
+import { processMedia, ensureExif } from "./dom";
+
+/**
+ * 启用 EXIF 显示功能
+ * 
+ * 动态加载 EXIF 样式，并处理页面上的媒体元素以添加 EXIF 显示条
+ * 
+ * @param selector - 图片选择器
+ */
 export async function enableExif(selector: string) {
+  // 动态导入样式文件
   await import("../styles/exif.scss");
-  const processed = new Set<HTMLElement>();
-  const anchors = Array.from(document.querySelectorAll(selector));
-  anchors.forEach((a) => {
-    const container = ensurePhotosuiteContainer(a);
-    if (processed.has(container)) return;
-    const img = container.querySelector("img");
-    if (!img) return;
+  
+  // 处理匹配的媒体元素，为每个容器添加 EXIF 条
+  processMedia(selector, (container) => {
     ensureExif(container);
-    processed.add(container);
-  });
-  const imgs = Array.from(document.querySelectorAll("img"));
-  imgs.forEach((img) => {
-    const container = ensurePhotosuiteContainer(img);
-    if (processed.has(container)) return;
-    ensureExif(container);
-    processed.add(container);
   });
 }
+

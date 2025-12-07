@@ -1,1 +1,7 @@
+/**
+ * @file style.css
+ * @description 全局样式入口，引入 Tailwind CSS 4.0
+ * @link https://tailwindcss.com/docs/installation/using-vite
+ */
+
 @import "tailwindcss";

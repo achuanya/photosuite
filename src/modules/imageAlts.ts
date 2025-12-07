@@ -1,20 +1,23 @@
-import { ensurePhotosuiteContainer, ensureCaption } from "./dom";
+/**
+ * @file imageAlts.ts
+ * @description 图片标题模块，负责将图片的 alt 属性作为标题显示
+ */
 
+import { processMedia, ensureCaption } from "./dom";
+
+/**
+ * 启用图片标题显示功能
+ * 
+ * 动态加载标题样式，并处理页面上的媒体元素以添加标题
+ * 
+ * @param selector - 图片选择器
+ */
 export async function enableImageAlts(selector: string) {
+  // 动态导入样式文件
   await import("../styles/image-alts.scss");
-  const processed = new Set<HTMLElement>();
-  const anchors = Array.from(document.querySelectorAll(selector));
-  anchors.forEach((a) => {
-    const container = ensurePhotosuiteContainer(a);
-    if (processed.has(container)) return;
+  
+  // 处理匹配的媒体元素，为每个容器添加标题
+  processMedia(selector, (container) => {
     ensureCaption(container);
-    processed.add(container);
-  });
-  const imgs = Array.from(document.querySelectorAll("img"));
-  imgs.forEach((img) => {
-    const container = ensurePhotosuiteContainer(img);
-    if (processed.has(container)) return;
-    ensureCaption(container);
-    processed.add(container);
   });
 }
