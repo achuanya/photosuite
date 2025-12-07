@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Photosuite Demo</title>
+    <link rel="stylesheet" href="/src/style.css" />
+    <link rel="stylesheet" href="https://cos.lhasa.icu/dist/glightbox/glightbox.min.css" />
+  </head>
+  <body>
+    <header class="w-full border-b border-gray-200/60 bg-white/90 backdrop-blur">
+      <div class="mx-auto max-w-5xl px-4 py-4 flex items-center justify-between">
+        <h1 class="text-lg font-medium text-gray-900">Photosuite</h1>
+        <a href="https://github.com/haibao/astro-photosuite" class="text-sm text-blue-600 hover:underline">GitHub</a>
+      </div>
+    </header>
+    <main class="mx-auto max-w-5xl px-4 py-8">
+      <p class="text-gray-600 text-sm mb-4">GLightbox demo · Tailwind CSS v4</p>
+      <div class="space-y-6">
+        <div class="mx-auto max-w-[768px] aspect-video">
+          <img alt="示例图 1" src="https://lhasa-1253887673.cos.ap-shanghai.myqcloud.com/photosuite/images/20251201235817_810_266.jpg" class="h-full w-full rounded shadow-sm object-cover" />
+        </div>
+        <div class="mx-auto max-w-[768px] aspect-video">
+          <img alt="示例图 2" src="https://lhasa-1253887673.cos.ap-shanghai.myqcloud.com/photosuite/images/20251202011238_816_266.jpg" class="h-full w-full rounded shadow-sm object-cover" />
+        </div>
+        <div class="mx-auto max-w-[768px] aspect-video">
+          <img alt="示例图 3" src="https://lhasa-1253887673.cos.ap-shanghai.myqcloud.com/photosuite/images/20251202011239_817_266.jpg" class="h-full w-full rounded shadow-sm object-cover" />
+        </div>
+        <div class="mx-auto max-w-[768px] aspect-video">
+          <img alt="示例图 4" src="https://lhasa-1253887673.cos.ap-shanghai.myqcloud.com/photosuite/images/20251202011240_819_266.jpg" class="h-full w-full rounded shadow-sm object-cover" />
+        </div>
+      </div>
+    </main>
+    <script type="module" src="/src/demo.ts"></script>
+    <script src="https://cos.lhasa.icu/dist/glightbox/glightbox.min.js" async></script>
+  </body>
+</html>
