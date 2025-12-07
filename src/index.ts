@@ -1,16 +1,7 @@
 import './styles/common.scss'
-export interface PhotosuiteInitOptions {
-  selector?: string;
-  gallery?: string;
-  glightbox?: boolean;
-  glightboxOptions?: Record<string, unknown>;
-  imageAlts?: boolean;
-  exif?: boolean;
-  glightboxCssUrl?: string;
-  glightboxJsUrl?: string;
-}
+import type { PhotosuiteOptions } from './types'
 
-export function photosuite(opts: PhotosuiteInitOptions = {}) {
+export function photosuite(opts: PhotosuiteOptions = {}) {
   const selector = opts.selector ?? "a.glightbox";
   const gallery = opts.gallery ?? "markdown";
   const enableLightbox = opts.glightbox ?? true;
@@ -45,7 +36,7 @@ export function photosuite(opts: PhotosuiteInitOptions = {}) {
   else document.addEventListener("DOMContentLoaded", start);
 }
 
-export default function astroPhotosuite(options: Record<string, unknown> = {}) {
+export default function astroPhotosuite(options: PhotosuiteOptions = {}) {
   return {
     name: "photosuite",
     hooks: {

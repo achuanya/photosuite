@@ -1,10 +1,4 @@
-export interface GlightboxModuleOptions {
-  selector: string;
-  gallery: string;
-  options?: Record<string, unknown>;
-  cssUrl?: string;
-  jsUrl?: string;
-}
+import type { GlightboxModuleOptions } from "../types";
 
 function wrap(img: Element, gallery: string) {
   const src = (img as HTMLImageElement).currentSrc || (img as HTMLImageElement).src || "";
@@ -81,4 +75,3 @@ export async function initGlightboxModule(opts: GlightboxModuleOptions) {
   };
   run();
 }
-
