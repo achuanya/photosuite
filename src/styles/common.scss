@@ -10,3 +10,10 @@
   border-radius: 0 !important;
   box-shadow: none !important;
 }
+
+.photosuite-item {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  line-height: 0;
+}
