@@ -6,7 +6,7 @@
 /**
  * Photosuite 主配置项接口
  */
-export interface PhotosuiteOptions {
+export interface PhotosuiteOptions extends ImageUrlOptions {
   /**
    * 图片选择器
    * @default "a.glightbox"
@@ -91,4 +91,30 @@ export interface GlightboxModuleOptions {
    * JS 资源地址
    */
   jsUrl?: string;
+}
+
+/**
+ * ImageUrl Rehype 插件配置接口
+ */
+export interface ImageUrlOptions {
+  /**
+   * 图片基础 URL
+   * @example "https://cdn.example.com/images/"
+   * @description 用于补全图片路径的基础 URL 前缀。
+   */
+  imageBase?: string;
+
+  /**
+   * 图片目录 Frontmatter Key
+   * @default "imageDir"
+   * @description 在 Markdown Frontmatter 中指定子目录名称的字段名。
+   */
+  imageDir?: string;
+
+  /**
+   * 是否使用文件名作为子目录
+   * @default false
+   * @description 如果为 true，则使用当前 Markdown 文件名（不含扩展名）作为子目录。
+   */
+  fileDir?: boolean;
 }

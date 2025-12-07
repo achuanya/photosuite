@@ -5,6 +5,7 @@
 
 import './styles/common.scss'
 import type { PhotosuiteOptions } from './types'
+import { imageUrl } from './rehype/imageUrl'
 
 /**
  * 初始化 Photosuite
@@ -69,12 +70,34 @@ export default function astroPhotosuite(options: PhotosuiteOptions = {}) {
   return {
     name: "photosuite",
     hooks: {
-      "astro:config:setup": ({ injectScript }: any) => {
+      "astro:config:setup": ({ injectScript, updateConfig }: any) => {
         // 在 Astro 页面中注入初始化脚本
-        const code = `import { photosuite } from 'photosuite';
-photosuite(${JSON.stringify(options)});`;
+        // 自动引入样式文件，无需用户手动导入
+        const code = 
+                    `
+                    import 'photosuite/dist/photosuite.css';
+                    import { photosuite } from 'photosuite';
+                    photosuite(${JSON.stringify(options)});
+                    `;
+
         injectScript("page", code);
+
+        // 如果配置了 imageBase，则自动注入 imageUrl Rehype 插件
+        // 该插件用于将 Markdown 中的相对路径图片重写为绝对 URL
+        if (options.imageBase) {
+          updateConfig({
+            markdown: {
+              rehypePlugins: [
+                [imageUrl, options]
+              ]
+            }
+          });
+        }
       },
     },
   };
 }
+
+// 导出 Rehype 插件和相关类型
+export { imageUrl } from './rehype/imageUrl';
+export type { ImageUrlOptions } from './types';
