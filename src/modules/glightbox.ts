@@ -101,12 +101,21 @@ function loadJs(src: string): Promise<void> {
  */
 export async function initGlightboxModule(opts: GlightboxModuleOptions) {
   const selector = opts.selector;
+  const scope = opts.scope;
   const gallery = opts.gallery;
   const cssUrl = opts.cssUrl || "https://cos.lhasa.icu/dist/glightbox/glightbox.min.css";
   const jsUrl = opts.jsUrl || "https://cos.lhasa.icu/dist/glightbox/glightbox.min.js";
 
   // 1. 处理所有图片元素，如果未被包装则进行包装
-  const imgs = Array.from(document.querySelectorAll("img"));
+  const imgs = new Set<HTMLImageElement>();
+  const anchors = new Set<Element>();
+  const roots = document.querySelectorAll(scope);
+
+  roots.forEach((root) => {
+    root.querySelectorAll("img").forEach((img) => imgs.add(img as HTMLImageElement));
+    root.querySelectorAll(selector).forEach((a) => anchors.add(a));
+  });
+
   imgs.forEach((el) => {
     const p = el.parentElement;
     const isA = p && p.tagName.toLowerCase() === "a";
@@ -116,7 +125,6 @@ export async function initGlightboxModule(opts: GlightboxModuleOptions) {
   });
 
   // 2. 同步所有匹配选择器的链接属性
-  const anchors = Array.from(document.querySelectorAll(selector));
   anchors.forEach((a) => sync(a, gallery));
 
   // 3. 加载资源

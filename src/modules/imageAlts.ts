@@ -12,12 +12,12 @@ import { processMedia, ensureCaption } from "./dom";
  * 
  * @param selector - 图片选择器
  */
-export async function enableImageAlts(selector: string) {
+export async function enableImageAlts(scope: string, selector: string) {
   // 动态导入样式文件
   await import("../styles/image-alts.scss");
   
   // 处理匹配的媒体元素，为每个容器添加标题
-  processMedia(selector, (container) => {
+  processMedia(scope, selector, (container) => {
     ensureCaption(container);
   });
 }

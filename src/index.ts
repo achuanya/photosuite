@@ -3,7 +3,6 @@
  * @description Photosuite 的主入口文件，导出了核心初始化函数和 Astro 集成函数
  */
 
-import './styles/common.scss'
 import type { PhotosuiteOptions } from './types'
 import { imageUrl } from './rehype/imageUrl'
 
@@ -14,14 +13,26 @@ import { imageUrl } from './rehype/imageUrl'
  * 
  * @param opts - Photosuite 配置项
  */
-export function photosuite(opts: PhotosuiteOptions = {}) {
+export function photosuite(opts: PhotosuiteOptions) {
+  const scope = opts.scope;
+  if (!scope) {
+    console.warn("Photosuite: 'scope' option is required.");
+    return;
+  }
+
   const selector = opts.selector ?? "a.glightbox";
   const gallery = opts.gallery ?? "markdown";
   const enableLightbox = opts.glightbox ?? true;
   const enableAlts = opts.imageAlts ?? true;
   const enableExif = opts.exif ?? true;
 
-  const start = () => {
+  const start = async () => {
+    // 检查 scope 是否存在，若不存在则不加载任何资源
+    if (!document.querySelector(scope)) return;
+
+    // 动态加载通用样式
+    await import('./styles/common.scss');
+
     const tasks: Promise<any>[] = [];
     
     // 如果启用灯箱功能，动态导入并初始化 glightbox 模块
@@ -30,6 +41,7 @@ export function photosuite(opts: PhotosuiteOptions = {}) {
         import("./modules/glightbox").then((m) =>
           m.initGlightboxModule({
             selector,
+            scope,
             gallery,
             options: opts.glightboxOptions,
             cssUrl: opts.glightboxCssUrl,
@@ -41,12 +53,12 @@ export function photosuite(opts: PhotosuiteOptions = {}) {
 
     // 如果启用标题功能，动态导入并初始化 imageAlts 模块
     if (enableAlts) {
-      tasks.push(import("./modules/imageAlts").then((m) => m.enableImageAlts(selector)));
+      tasks.push(import("./modules/imageAlts").then((m) => m.enableImageAlts(scope, selector)));
     }
 
     // 如果启用 EXIF 功能，动态导入并初始化 exif 模块
     if (enableExif) {
-      tasks.push(import("./modules/exif").then((m) => m.enableExif(selector)));
+      tasks.push(import("./modules/exif").then((m) => m.enableExif(scope, selector)));
     }
 
     // 并行执行所有初始化任务
@@ -66,7 +78,7 @@ export function photosuite(opts: PhotosuiteOptions = {}) {
  * @param options - Photosuite 配置项
  * @returns Astro 集成对象
  */
-export default function astroPhotosuite(options: PhotosuiteOptions = {}) {
+export default function astroPhotosuite(options: PhotosuiteOptions) {
   return {
     name: "photosuite",
     hooks: {

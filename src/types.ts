@@ -8,6 +8,12 @@
  */
 export interface PhotosuiteOptions extends ImageUrlOptions {
   /**
+   * 生效范围
+   * @description 仅限 CSS 选择器范围内生效，支持多值逗号分隔
+   */
+  scope: string;
+
+  /**
    * 图片选择器
    * @default "a.glightbox"
    * @description 用于选择需要应用 Photosuite 效果的图片或链接元素的选择器字符串
@@ -65,6 +71,11 @@ export interface PhotosuiteOptions extends ImageUrlOptions {
  * GLightbox 模块初始化配置接口
  */
 export interface GlightboxModuleOptions {
+  /**
+   * 生效范围
+   */
+  scope: string;
+
   /**
    * 图片选择器
    * @description 需要绑定 GLightbox 事件的元素选择器

@@ -53,6 +53,7 @@ export function ensurePhotosuiteContainer(el: Element): HTMLElement {
  * @param callback - 对每个处理后的容器执行的回调函数
  */
 export function processMedia(
+  scope: string,
   selector: string,
   callback: (container: HTMLElement) => void
 ) {
@@ -71,10 +72,13 @@ export function processMedia(
     processed.add(container);
   };
 
-  // 处理匹配选择器的元素
-  document.querySelectorAll(selector).forEach(process);
-  // 额外处理页面上所有的 img 元素
-  document.querySelectorAll('img').forEach(process);
+  const roots = document.querySelectorAll(scope);
+  roots.forEach((root) => {
+    // 处理匹配选择器的元素
+    root.querySelectorAll(selector).forEach(process);
+    // 额外处理页面上所有的 img 元素
+    root.querySelectorAll("img").forEach(process);
+  });
 }
 
 /**
