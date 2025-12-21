@@ -3,12 +3,20 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "main": "dist/photosuite.cjs",
-  "module": "dist/photosuite.es",
+  "main": "dist/photosuite.cjs.js",
+  "module": "dist/photosuite.es.js",
   "exports": {
     ".": {
-      "import": "./dist/photosuite.es",
-      "require": "./dist/photosuite.cjs"
+      "node": {
+        "import": "./dist/photosuite.integration.js",
+        "require": "./dist/photosuite.integration.cjs"
+      },
+      "import": "./dist/photosuite.es.js",
+      "require": "./dist/photosuite.cjs.js"
+    },
+    "./astro": {
+      "import": "./dist/photosuite.integration.js",
+      "require": "./dist/photosuite.integration.cjs"
     },
     "./dist/photosuite.css": "./dist/photosuite.css"
   },
@@ -21,10 +29,13 @@
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
+  "dependencies": {
+    "exiftool-vendored": "^34.1.0"
+  },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.17",
+    "@types/node": "^25.0.3",
     "autoprefixer": "^10.4.22",
-    "exiftool-vendored": "^34.1.0",
     "postcss": "^8.5.6",
     "sass": "^1.94.2",
     "tailwindcss": "^4.1.17",

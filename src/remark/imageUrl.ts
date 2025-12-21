@@ -1,17 +1,15 @@
 /**
  * @file imageUrl.ts
- * @description Rehype 插件，用于根据配置自动补全图片 URL
+ * @description Remark 插件，用于根据配置自动补全图片 URL
  */
 
 import type { ImageUrlOptions } from "../types";
 
-// 定义简单的 AST 节点类型，避免引入 hast 依赖
+// 定义简单的 AST 节点类型，避免引入 mdast 依赖
 interface Node {
   type: string;
-  tagName?: string;
-  properties?: Record<string, any>;
+  url?: string;
   children?: Node[];
-  value?: string;
   [key: string]: any;
 }
 
@@ -23,12 +21,15 @@ interface Node {
  * @param parts - 路径片段
  * @returns 拼接后的路径
  */
-const join = (...parts: string[]): string => {
-  if (parts.length === 0) return "";
-  if (parts.length === 1) return parts[0];
+const join = (...parts: (string | undefined | null)[]): string => {
+  // 过滤掉无效部分，但保留空字符串（如果它是有意义的，但在路径拼接中空字符串通常被忽略）
+  const validParts = parts.filter((p): p is string => typeof p === 'string' && p !== '');
+  
+  if (validParts.length === 0) return "";
+  if (validParts.length === 1) return validParts[0];
 
-  const partA = parts[0];
-  const partB = parts[1];
+  const partA = validParts[0];
+  const partB = validParts[1];
   
   // 处理 partA 结尾的斜杠
   const cleanA = partA.endsWith("/") ? partA.slice(0, -1) : partA;
@@ -38,8 +39,8 @@ const join = (...parts: string[]): string => {
   const result = `${cleanA}/${cleanB}`;
   
   // 递归处理剩余部分
-  if (parts.length > 2) {
-    return join(result, ...parts.slice(2));
+  if (validParts.length > 2) {
+    return join(result, ...validParts.slice(2));
   }
   
   return result;
@@ -67,9 +68,9 @@ const isShort = (s: string): boolean => {
 };
 
 /**
- * ImageUrl Rehype 插件
+ * ImageUrl Remark 插件
  * 
- * 遍历 HTML AST，查找 img 标签，并根据配置补全其 src 属性
+ * 遍历 Markdown AST，查找 image 节点，并根据配置补全其 url 属性
  * 
  * @param options - 插件配置项
  * @returns Transformer 函数
@@ -79,35 +80,35 @@ export function imageUrl(options: ImageUrlOptions = {}) {
 
   return (tree: Node, file: any) => {
     // 提取 Frontmatter 数据
-    const fm = file?.data?.astro?.frontmatter || {};
+    // 注意：在 Remark 阶段，frontmatter 可能在 file.data.astro.frontmatter
+    // 或者通过 remark-frontmatter 插件解析在 tree 的 children 中（type: yaml）
+    // 但 Astro 通常会处理好并放在 file.data 中
+    const fm = file?.data?.astro?.frontmatter || file?.data?.frontmatter || {};
+    
     // 获取 Frontmatter 中指定的目录
     const dirFm = fm[imageDir] || "";
     
     // 获取当前处理文件的文件名（用于 fileDir 模式）
     const filePath = file?.path || file?.history?.[0] || "";
     // 提取文件名（去除路径和扩展名）
-    // Windows 路径可能包含反斜杠，Unix 路径使用斜杠，这里统一处理
     const fileName = filePath.split(/[\\/]/).pop()?.split('.').shift() || "";
     
     // 确定最终使用的子目录
-    // 如果启用 fileDir，则优先使用文件名；否则使用 Frontmatter 中的配置
     const dir = fileDir ? fileName : dirFm;
 
     // 递归遍历 AST 的辅助函数
     const visit = (node: Node) => {
       if (!node) return;
       
-      // 找到 img 标签
-      if (node.type === 'element' && node.tagName === 'img') {
-        const src = node.properties?.src || "";
+      // 找到 image 节点
+      if (node.type === 'image') {
+        const src = node.url || "";
         
-        // 核心重写逻辑：如果有 imageBase 且 src 是短链接，则进行重写
-        if (imageBase && isShort(src)) {
-          // 根据是否有子目录来决定拼接方式
-          const newSrc = dir ? join(imageBase, dir, src) : join(imageBase, src);
-          if (node.properties) {
-            node.properties.src = newSrc;
-          }
+        // 核心重写逻辑：如果有 imageBase 或 dir 且 src 是短链接，则进行重写
+        if ((imageBase || dir) && isShort(src)) {
+          // 拼接路径
+          const newSrc = join(imageBase, dir, src);
+          node.url = newSrc;
         }
       }
 

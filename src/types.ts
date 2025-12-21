@@ -50,9 +50,10 @@ export interface PhotosuiteOptions extends ImageUrlOptions {
   /**
    * 是否启用 EXIF 信息
    * @default true
-   * @description 控制是否显示图片的 EXIF 信息（目前仅显示占位样式，实际数据需自行处理）
+   * @description 控制是否显示图片的 EXIF 信息。在 Markdown 中使用时，会在编译时自动提取并嵌入 EXIF 数据。
+   * 可以传递对象进行更细粒度的配置。
    */
-  exif?: boolean;
+  exif?: boolean | PhotosuiteExifOptions;
 
   /**
    * GLightbox CSS CDN 地址
@@ -128,4 +129,27 @@ export interface ImageUrlOptions {
    * @description 如果为 true，则使用当前 Markdown 文件名（不含扩展名）作为子目录。
    */
   fileDir?: boolean;
+}
+
+/**
+ * EXIF 配置选项
+ */
+export interface PhotosuiteExifOptions {
+  /**
+   * 是否启用
+   * @default true
+   */
+  enabled?: boolean;
+
+  /**
+   * 需要展示的 EXIF 字段及其顺序
+   * @default ['Model', 'LensModel', 'FocalLength', 'FNumber', 'ExposureTime', 'ISO', 'DateTimeOriginal']
+   */
+  fields?: ('Make' | 'Model' | 'LensModel' | 'FocalLength' | 'FNumber' | 'ExposureTime' | 'ISO' | 'DateTimeOriginal')[];
+
+  /**
+   * 分隔符
+   * @default " · "
+   */
+  separator?: string;
 }

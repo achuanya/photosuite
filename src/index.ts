@@ -1,10 +1,9 @@
 /**
  * @file index.ts
- * @description Photosuite 的主入口文件，导出了核心初始化函数和 Astro 集成函数
+ * @description Photosuite 的客户端入口文件，导出了核心初始化函数
  */
 
 import type { PhotosuiteOptions } from './types'
-import { imageUrl } from './rehype/imageUrl'
 
 /**
  * 初始化 Photosuite
@@ -70,46 +69,5 @@ export function photosuite(opts: PhotosuiteOptions) {
   else document.addEventListener("DOMContentLoaded", start);
 }
 
-/**
- * Astro 集成默认导出
- * 
- * 提供给 Astro 框架使用的集成配置。
- * 
- * @param options - Photosuite 配置项
- * @returns Astro 集成对象
- */
-export default function astroPhotosuite(options: PhotosuiteOptions) {
-  return {
-    name: "photosuite",
-    hooks: {
-      "astro:config:setup": ({ injectScript, updateConfig }: any) => {
-        // 在 Astro 页面中注入初始化脚本
-        // 自动引入样式文件，无需用户手动导入
-        const code = 
-                    `
-                    import 'photosuite/dist/photosuite.css';
-                    import { photosuite } from 'photosuite';
-                    photosuite(${JSON.stringify(options)});
-                    `;
-
-        injectScript("page", code);
-
-        // 如果配置了 imageBase，则自动注入 imageUrl Rehype 插件
-        // 该插件用于将 Markdown 中的相对路径图片重写为绝对 URL
-        if (options.imageBase) {
-          updateConfig({
-            markdown: {
-              rehypePlugins: [
-                [imageUrl, options]
-              ]
-            }
-          });
-        }
-      },
-    },
-  };
-}
-
-// 导出 Rehype 插件和相关类型
-export { imageUrl } from './rehype/imageUrl';
-export type { ImageUrlOptions } from './types';
+// 导出类型定义
+export type { PhotosuiteOptions, ImageUrlOptions } from './types';
