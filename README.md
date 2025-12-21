@@ -228,7 +228,7 @@ photosuite({
 
 One line of code, one plugin, for independent blogs, it is insignificant, like dust.
 
-But we insist on taking root in this soil, letting the soul rest, and letting thought stand!
+But we insist on taking root in this soil, letting thought be free, and letting the soul rest!
 
 [![](https://contrib.rocks/image?repo=achuanya/photosuite)](https://github.com/achuanya/photosuite/graphs/contributors)
 

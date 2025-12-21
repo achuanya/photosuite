@@ -229,7 +229,7 @@ photosuite({
 
 一行代码，一个插件，对于独立博客而言，微不足道，如同尘埃。
 
-但我们偏要在这片土壤中扎根，让灵魂安放，让思想站立！
+但我们偏要在这片土壤中扎根，让思想自由，让灵魂安放！
 
 [![](https://contrib.rocks/image?repo=achuanya/photosuite)](https://github.com/achuanya/photosuite/graphs/contributors)
 
