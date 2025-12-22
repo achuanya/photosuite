@@ -27,17 +27,18 @@ yarn add photosuite
 
 ## Quick Start
 
-> **Note**: `scope` is the only **required** field, used to specify the scope where the plugin takes effect, avoiding impact on other parts of the site.
+Integrating Photosuite with Astro is very simple, just add the following configuration to `astro.config.js`:
 
 ```javascript
 import { defineConfig } from 'astro/config';
 import photosuite from 'photosuite';
+import "photosuite/dist/photosuite.css";
 
 export default defineConfig({
   integrations: [
     photosuite({
       // [Required] Specify the CSS selector for the scope
-      // Recommended: Your content container. Supports multiple selectors separated by commas.
+      // Recommended: Your content container to avoid affecting other parts of the site. Supports multiple selectors separated by commas.
       scope: '#main', 
     })
   ]
@@ -161,6 +162,9 @@ photosuite({
 ### Full Configuration Code Example
 
 ```javascript
+import photosuite from 'photosuite';
+import "photosuite/dist/photosuite.css";
+
 photosuite({
   // ----------------
   // Required

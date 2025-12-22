@@ -25,9 +25,11 @@ export default function astroPhotosuite(options: PhotosuiteOptions) {
         // 自动引入样式文件，无需用户手动导入
         const code = 
                     `
-                    import 'photosuite/dist/photosuite.css';
                     import { photosuite } from 'photosuite';
-                    photosuite(${JSON.stringify(options)});
+                    const __opts = ${JSON.stringify(options)};
+                    const __run = () => photosuite(__opts);
+                    __run();
+                    document.addEventListener('astro:page-load', __run);
                     `;
 
         injectScript("page", code);

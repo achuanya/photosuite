@@ -3,6 +3,7 @@
  * @description Photosuite 的客户端入口文件，导出了核心初始化函数
  */
 
+import './styles/common.scss'
 import type { PhotosuiteOptions } from './types'
 
 /**
@@ -28,9 +29,6 @@ export function photosuite(opts: PhotosuiteOptions) {
   const start = async () => {
     // 检查 scope 是否存在，若不存在则不加载任何资源
     if (!document.querySelector(scope)) return;
-
-    // 动态加载通用样式
-    await import('./styles/common.scss');
 
     const tasks: Promise<any>[] = [];
     

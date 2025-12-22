@@ -27,17 +27,18 @@ yarn add photosuite
 
 ## 快速开始
 
-> **注意**：`scope` 是唯一的**必填项**，用于指定插件生效的范围，避免影响网站其他部分。
+Astro 集成 Photosuite 非常简单，只需要在 `astro.config.js` 中添加以下配置：
 
 ```javascript
 import { defineConfig } from 'astro/config';
 import photosuite from 'photosuite';
+import "photosuite/dist/photosuite.css";
 
 export default defineConfig({
   integrations: [
     photosuite({
       // [必填] 指定生效范围的 CSS 选择器
-      // 建议指定为您的文章容器，可包含多个选择器，用逗号分隔
+      // 建议指定为您的文章容器，避免影响网站其他部分。支持多个选择器，用逗号分隔
       scope: '#main',
     })
   ]
@@ -161,6 +162,9 @@ photosuite({
 ### 全部配置代码示例
 
 ```javascript
+import photosuite from 'photosuite';
+import "photosuite/dist/photosuite.css";
+
 photosuite({
   // ----------------
   // 必填项
