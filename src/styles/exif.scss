@@ -25,6 +25,11 @@
   opacity: 0;
   transition: opacity .2s ease-in-out;
   pointer-events: none; /* 避免遮挡下方元素的点击事件 */
+  
+  /* 如果内容为空，则隐藏 */
+  &:empty {
+    display: none !important;
+  }
 }
 
 /* 鼠标悬停时显示 EXIF 信息 */

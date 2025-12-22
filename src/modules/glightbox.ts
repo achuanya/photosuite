@@ -50,7 +50,7 @@ function sync(a: Element, gallery: string) {
   if (finalSrc && a.getAttribute("href") !== finalSrc) a.setAttribute("href", finalSrc);
 
   // 同步 alt 文本到 dataset.title
-  const alt = img.getAttribute("alt");
+  const alt = String(img.getAttribute("alt") || "").trim();
   if (alt && !(a as HTMLElement).dataset.title) (a as HTMLElement).dataset.title = alt;
 
   // 设置画廊分组

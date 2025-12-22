@@ -183,10 +183,10 @@ async function processNode(node: Node, file: any, options: any) {
          const data = await handleExif(filePath);
          
          // 检查曝光三要素
-         const hasExposure = data.FNumber || data.ExposureTime || data.ISO;
-         if (!hasExposure) {
-            return;
-         }
+        const hasExposure = data.FNumber && data.ExposureTime && data.ISO;
+        if (!hasExposure) {
+           return;
+        }
 
          // 获取配置
          const exifOptions = (typeof options.exif === 'object' ? options.exif : {}) as any;

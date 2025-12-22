@@ -113,10 +113,17 @@ export function ensureCaption(container: HTMLElement): void {
  * @param container - 图片容器 (.photosuite-item)
  */
 export function ensureExif(container: HTMLElement): void {
-  // 如果已经存在 EXIF 条，则不再创建
-  if (container.querySelector(".photosuite-exif")) return;
+  // 检查是否已存在 EXIF 条
+  const existing = container.querySelector(".photosuite-exif");
+  if (existing) {
+    // 如果存在但内容为空（只有空白字符），则将其移除
+    if (!existing.textContent?.trim()) {
+      existing.remove();
+    }
+    return;
+  }
 
-  const bar = document.createElement("div");
-  bar.className = "photosuite-exif";
-  container.appendChild(bar);
+  // 客户端不再自动创建空的 EXIF 条，
+  // 因为 EXIF 数据是在构建时由 rehype 插件提取并注入的。
+  // 如果构建时没有生成（例如因为缺少关键 EXIF 信息），客户端也不应显示空条。
 }
