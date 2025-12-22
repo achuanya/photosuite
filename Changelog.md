@@ -1,3 +1,12 @@
+## [v0.1.1](https://github.com/achuanya/photosuite/compare/v0.1.0...v0.1.1) (2025-12-28)
+
+### Bug 修复
+- 修复空 EXIF 条目仍然显示的问题，当 EXIF 内容为空时自动隐藏
+- 优化 EXIF 数据处理逻辑，仅在曝光三要素（光圈 / 快门 / ISO）完整时才显示
+- 客户端不再自动创建空 EXIF 条目，与构建阶段的处理逻辑保持一致
+
+---
+
 ## [v0.1.0](https://github.com/achuanya/photosuite/compare/v0.1.0...v0.1.0) (2025-12-28)
 
 PhotoSuite 首个版本正式发布！
