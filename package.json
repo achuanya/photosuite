@@ -21,19 +21,13 @@
   "bugs": "https://github.com/achuanya/photosuite/issues",
   "type": "module",
   "main": "./dist/photosuite.integration.js",
-  "module": "./dist/photosuite.es.js",
+  "module": "./dist/photosuite.integration.js",
   "types": "./dist/integration.d.ts",
   "exports": {
     ".": {
-      "node": {
-        "types": "./dist/integration.d.ts",
-        "import": "./dist/photosuite.integration.js",
-        "require": "./dist/photosuite.integration.cjs"
-      },
-      "types": "./dist/index.d.ts",
-      "import": "./dist/photosuite.es.js",
-      "require": "./dist/photosuite.cjs.js",
-      "default": "./dist/photosuite.es.js"
+      "types": "./dist/integration.d.ts",
+      "import": "./dist/photosuite.integration.js",
+      "require": "./dist/photosuite.integration.cjs"
     },
     "./client": {
       "types": "./dist/index.d.ts",

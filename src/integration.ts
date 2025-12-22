@@ -25,7 +25,7 @@ export default function astroPhotosuite(options: PhotosuiteOptions) {
         // 自动引入样式文件，无需用户手动导入
         const code = 
                     `
-                    import { photosuite } from 'photosuite';
+                    import { photosuite } from 'photosuite/client';
                     const __opts = ${JSON.stringify(options)};
                     const __run = () => photosuite(__opts);
                     __run();
@@ -67,6 +67,11 @@ export default function astroPhotosuite(options: PhotosuiteOptions) {
     },
   };
 }
+
+/**
+ * 允许使用 import { photosuite } from 'photosuite' 语法
+ */
+export const photosuite = astroPhotosuite;
 
 // 导出插件
 export { imageUrl } from './remark/imageUrl';
