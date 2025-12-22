@@ -5,8 +5,14 @@
 
 import { defineConfig } from 'vite'
 import path from 'path'
+import dts from 'vite-plugin-dts'
 
 export default defineConfig({
+  plugins: [
+    dts({
+      insertTypesEntry: true,
+    }),
+  ],
   build: {
     lib: {
       entry: {
@@ -16,17 +22,14 @@ export default defineConfig({
       name: 'photosuite',
       formats: ['es', 'cjs'],
       fileName: (format, entryName) => {
-        // 为了兼容旧的引用方式，index 入口生成 photosuite.es.js / photosuite.cjs
-        // integration 入口生成 photosuite.integration.js / photosuite.integration.cjs
         const ext = format === 'es' ? 'js' : 'cjs';
+        
+        // 主入口特殊处理：保持 photosuite.es.js / photosuite.cjs.js 的命名格式
         if (entryName === 'index') {
-          // 为了保持向后兼容（虽然 package.json 的 main/module 可以调整）
-          // 使用更清晰的命名：photosuite.js (esm) 和 photosuite.cjs (cjs)
-          // 注意：Vite 默认库模式如果只有 es 和 cjs，单入口会是 name.js 和 name.cjs
-          // 多入口模式下，format 'es' 通常生成 [name].js，format 'cjs' 生成 [name].cjs
-          // 我们这里显式指定一下
           return format === 'es' ? 'photosuite.es.js' : 'photosuite.cjs.js';
         }
+        
+        // 其他入口（如 integration）使用标准命名格式
         return `photosuite.${entryName}.${ext}`;
       },
     },

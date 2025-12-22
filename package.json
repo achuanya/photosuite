@@ -1,33 +1,60 @@
 {
   "name": "photosuite",
-  "private": true,
-  "version": "1.0.0",
+  "version": "0.1.0",
+  "description": "A zero-config Astro integration for better images (Lightbox, EXIF, Path resolution).",
+  "keywords": [
+    "astro-integration",
+    "lightbox",
+    "exif",
+    "gallery",
+    "markdown-images",
+    "photography",
+    "zero-config"
+  ],
+  "author": "achuanya",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/achuanya/photosuite"
+  },
+  "homepage": "https://photosuite.lhasa.icu",
+  "bugs": "https://github.com/achuanya/photosuite/issues",
   "type": "module",
-  "main": "dist/photosuite.cjs.js",
-  "module": "dist/photosuite.es.js",
+  "main": "./dist/photosuite.integration.js",
+  "module": "./dist/photosuite.es.js",
+  "types": "./dist/integration.d.ts",
   "exports": {
     ".": {
       "node": {
+        "types": "./dist/integration.d.ts",
         "import": "./dist/photosuite.integration.js",
         "require": "./dist/photosuite.integration.cjs"
       },
+      "types": "./dist/index.d.ts",
+      "import": "./dist/photosuite.es.js",
+      "require": "./dist/photosuite.cjs.js",
+      "default": "./dist/photosuite.es.js"
+    },
+    "./client": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/photosuite.es.js",
       "require": "./dist/photosuite.cjs.js"
-    },
-    "./astro": {
-      "import": "./dist/photosuite.integration.js",
-      "require": "./dist/photosuite.integration.cjs"
     },
     "./dist/photosuite.css": "./dist/photosuite.css"
   },
   "files": [
     "dist",
-    "LICENSE"
+    "LICENSE",
+    "README.md",
+    "README.zh-CN.md"
   ],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview"
+  },
+  "peerDependencies": {
+    "astro": "^4.0.0 || ^5.0.0"
   },
   "dependencies": {
     "exiftool-vendored": "^34.1.0"
@@ -40,7 +67,8 @@
     "sass": "^1.94.2",
     "tailwindcss": "^4.1.17",
     "typescript": "~5.9.3",
-    "vite": "npm:rolldown-vite@7.2.5"
+    "vite": "npm:rolldown-vite@7.2.5",
+    "vite-plugin-dts": "^4.5.4"
   },
   "overrides": {
     "vite": "npm:rolldown-vite@7.2.5"
