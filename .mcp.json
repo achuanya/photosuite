@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "context7": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["npx", "@upstash/context7-mcp"],
+      "env": {}
+    },
+    "astro": {
+      "type": "http",
+      "url": "https://mcp.docs.astro.build/mcp"
+    }
+  }
+}
