@@ -1,0 +1,83 @@
+/**
+ * @file image-grid.scss
+ * @description 图片拼图的样式定义
+ */
+
+/* 拼图容器 */
+.photosuite-grid {
+  --photosuite-grid-gap: 4px;
+  
+  display: flex;
+  gap: var(--photosuite-grid-gap);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  align-items: flex-start;
+}
+
+/* 拼图项 */
+.photosuite-grid-item {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  
+  /* 确保每个项的图片容器宽度一致 */
+  .photosuite-item,
+  .photosuite-grid-member {
+    width: 100%;
+    display: block;
+    overflow: hidden;
+
+    /* 确保图片填充容器 */
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* 保持链接为块级元素 */
+    a {
+      display: block;
+      width: 100%;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+    }
+
+    &:hover {
+      img {
+        transform: scale(1.05);
+      }
+    }
+  }
+}
+
+/* 两张图片拼图 */
+.photosuite-grid[data-grid-count="2"] {
+  .photosuite-grid-item {
+    flex: 1;
+    max-width: 50%;
+  }
+}
+
+/* 三张图片拼图 */
+.photosuite-grid[data-grid-count="3"] {
+  .photosuite-grid-item {
+    flex: 1;
+    max-width: 33.333%;
+  }
+}
+
+/* 响应式：移动端保持拼图布局，但减小间距 */
+@media (max-width: 768px) {
+  .photosuite-grid {
+    --photosuite-grid-gap: 2px;
+  }
+}

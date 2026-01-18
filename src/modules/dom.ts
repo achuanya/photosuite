@@ -59,11 +59,11 @@ export function processMedia(
 ) {
   // 使用 Set 防止重复处理同一个容器
   const processed = new Set<HTMLElement>();
-  
+
   const process = (el: Element) => {
     const container = ensurePhotosuiteContainer(el);
     if (processed.has(container)) return;
-    
+
     // 安全检查：确保容器内确实包含图片
     // 如果处理的是非图片元素且内部没有图片，则跳过
     if (!container.querySelector('img')) return;
@@ -89,6 +89,9 @@ export function processMedia(
  * @param container - 图片容器 (.photosuite-item)
  */
 export function ensureCaption(container: HTMLElement): void {
+  // 如果容器是拼图成员，则不创建标题
+  if (container.classList.contains("photosuite-grid-member")) return;
+
   // 如果已经存在标题，则不再创建
   if (container.querySelector(".photosuite-caption")) return;
 
@@ -113,6 +116,9 @@ export function ensureCaption(container: HTMLElement): void {
  * @param container - 图片容器 (.photosuite-item)
  */
 export function ensureExif(container: HTMLElement): void {
+  // 如果容器是拼图成员，则不创建 EXIF
+  if (container.classList.contains("photosuite-grid-member")) return;
+
   // 检查是否已存在 EXIF 条
   const existing = container.querySelector(".photosuite-exif");
   if (existing) {

@@ -11,6 +11,7 @@ photosuite({
   scope: 'main',
   glightbox: true,
   imageAlts: true,
+  imageGrid: true,
   exif: true,
   glightboxOptions: {
     loop: true,

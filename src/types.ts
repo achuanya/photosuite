@@ -48,6 +48,13 @@ export interface PhotosuiteOptions extends ImageUrlOptions {
   imageAlts?: boolean;
 
   /**
+   * 是否启用图片拼图
+   * @default true
+   * @description 控制是否将连续的图片（2-3张）组合成拼图布局
+   */
+  imageGrid?: boolean;
+
+  /**
    * 是否启用 EXIF 信息
    * @default true
    * @description 控制是否显示图片的 EXIF 信息。在 Markdown 中使用时，会在编译时自动提取并嵌入 EXIF 数据。

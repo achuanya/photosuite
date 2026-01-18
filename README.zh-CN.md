@@ -12,6 +12,7 @@ Photosuite 是一款简单易用但功能丰富的图像插件，它将灯箱、
 *   **EXIF**：集成 exiftool-vendored.js 执行快、覆盖广
 *   **路径**：只需要插入文件名，自动补全绝对路径
 *   **标题**：自动获取图片alt进行标题展示
+*   **拼图**：连续的图片（2-3张）自动组合成拼图布局，每张图片独立可点击
 *   **性能**：纯静态，功能模块化，按需加载
 *   **零配置启动**：默认配置即可满足绝大多数需求，同时也提供丰富的选项供深度定制
 
@@ -143,6 +144,41 @@ photosuite({
 })
 ```
 
+### 4. 图片拼图
+
+Photosuite 支持自动将连续的图片组合成拼图布局。当 Markdown 中有 2-3 张图片紧挨着时，它们会自动组合成拼图，且每张图片都独立可点击。
+
+**Markdown 写法：**
+
+两张图片拼图：
+```markdown
+![图片1](photo1.jpg)
+![图片2](photo2.jpg)
+```
+
+三张图片拼图：
+```markdown
+![图片1](photo1.jpg)
+![图片2](photo2.jpg)
+![图片3](photo3.jpg)
+```
+
+**特性：**
+- 自动检测连续的图片（2-3张）
+- 每张图片宽度一致，均分容器宽度
+- 每张图片独立可点击，都支持灯箱功能
+- 交互体验：鼠标悬停时图片自动轻微放大
+- 响应式设计：移动端自动切换为单列布局
+
+**配置：**
+```javascript
+photosuite({
+  // ...
+  // 关闭拼图功能
+  imageGrid: false,
+})
+```
+
 ## 完整配置参考
 
 ### 参数列表
@@ -156,6 +192,7 @@ photosuite({
 | `fileDir` | `boolean` | ❌ | `false` | **文件名归档**。是否自动使用 Markdown 文件名作为图片子目录 |
 | `glightbox` | `boolean` | ❌ | `true` | **启用灯箱**。是否加载 GLightbox 模块 |
 | `imageAlts` | `boolean` | ❌ | `true` | **启用标题**。是否将 `alt` 属性显示为图片标题 |
+| `imageGrid` | `boolean` | ❌ | `true` | **启用拼图**。是否将连续的图片（2-3张）组合成拼图布局 |
 | `exif` | `boolean` \| `object` | ❌ | `true` | **启用 EXIF**。可通过 fields:[] 配置显示选项 |
 | `glightboxOptions` | `object` | ❌ | - | **灯箱原生配置**。透传给 GLightbox 的配置项 |
 
@@ -186,6 +223,7 @@ photosuite({
   // 功能开关
   glightbox: true,
   imageAlts: true,
+  imageGrid: true,
   
   // EXIF 详细配置
   exif: {

@@ -24,6 +24,7 @@ export function photosuite(opts: PhotosuiteOptions) {
   const gallery = opts.gallery ?? "markdown";
   const enableLightbox = opts.glightbox ?? true;
   const enableAlts = opts.imageAlts ?? true;
+  const enableGrid = opts.imageGrid ?? true;
   const enableExif = opts.exif ?? true;
 
   const start = async () => {
@@ -31,7 +32,7 @@ export function photosuite(opts: PhotosuiteOptions) {
     if (!document.querySelector(scope)) return;
 
     const tasks: Promise<any>[] = [];
-    
+
     // 如果启用灯箱功能，动态导入并初始化 glightbox 模块
     if (enableLightbox) {
       tasks.push(
@@ -53,13 +54,18 @@ export function photosuite(opts: PhotosuiteOptions) {
       tasks.push(import("./modules/imageAlts").then((m) => m.enableImageAlts(scope, selector)));
     }
 
+    // 如果启用拼图功能，动态导入并初始化 imageGrid 模块
+    if (enableGrid) {
+      tasks.push(import("./modules/imageGrid").then((m) => m.enableImageGrid(scope, selector)));
+    }
+
     // 如果启用 EXIF 功能，动态导入并初始化 exif 模块
     if (enableExif) {
       tasks.push(import("./modules/exif").then((m) => m.enableExif(scope, selector)));
     }
 
     // 并行执行所有初始化任务
-    if (tasks.length) Promise.all(tasks).catch(() => {});
+    if (tasks.length) Promise.all(tasks).catch(() => { });
   };
 
   // 确保在 DOM 加载完成后执行

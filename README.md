@@ -12,6 +12,7 @@ Photosuite is a simple yet feature-rich image integration tailored for independe
 *   **EXIF**: Integrated `exiftool-vendored.js` for fast execution and broad coverage.
 *   **Path Resolution**: Simply insert the filename, and it automatically resolves the absolute path.
 *   **Captions**: Automatically extracts the image's `alt` attribute to display as a caption.
+*   **Image Grid**: Automatically combines consecutive images (2-3) into a grid layout, each independently clickable.
 *   **Performance**: Purely static, modular features, loaded on demand.
 *   **Zero-Config Start**: Default settings satisfy most needs, while offering rich options for deep customization.
 
@@ -143,6 +144,41 @@ photosuite({
 })
 ```
 
+### 4. Image Grid
+
+Photosuite supports automatically combining consecutive images into a grid layout. When 2-3 images are placed adjacently in Markdown, they will be automatically combined into a grid, and each image remains independently clickable.
+
+**Markdown Usage:**
+
+Two-image grid:
+```markdown
+![Image 1](photo1.jpg)
+![Image 2](photo2.jpg)
+```
+
+Three-image grid:
+```markdown
+![Image 1](photo1.jpg)
+![Image 2](photo2.jpg)
+![Image 3](photo3.jpg)
+```
+
+**Features:**
+- Automatically detects consecutive images (2-3 images)
+- Each image has consistent width, evenly dividing the container
+- Each image is independently clickable with lightbox support
+- Interactive experience: Image zooms in slightly on hover
+- Responsive design: automatically switches to single-column layout on mobile devices
+
+**Configuration:**
+```javascript
+photosuite({
+  // ...
+  // Disable image grid
+  imageGrid: false,
+})
+```
+
 ## Complete Configuration Reference
 
 ### Parameter List
@@ -156,6 +192,7 @@ photosuite({
 | `fileDir` | `boolean` | ❌ | `false` | **Filename Archiving**. Whether to automatically use Markdown filename as image subdirectory. |
 | `glightbox` | `boolean` | ❌ | `true` | **Enable Lightbox**. Whether to load GLightbox module. |
 | `imageAlts` | `boolean` | ❌ | `true` | **Enable Captions**. Whether to display `alt` attribute as image caption. |
+| `imageGrid` | `boolean` | ❌ | `true` | **Enable Image Grid**. Whether to combine consecutive images (2-3) into a grid layout. |
 | `exif` | `boolean` \| `object` | ❌ | `true` | **Enable EXIF**. `false` to disable, `true` for default config, or pass object to customize via fields:[]. |
 | `glightboxOptions` | `object` | ❌ | - | **Native Lightbox Config**. Configuration items passed through to GLightbox. |
 
@@ -186,6 +223,7 @@ photosuite({
   // Feature Toggles
   glightbox: true,
   imageAlts: true,
+  imageGrid: true,
   
   // EXIF Detailed Configuration
   exif: {

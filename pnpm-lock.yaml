@@ -14,6 +14,9 @@ importers:
       exiftool-vendored:
         specifier: ^34.1.0
         version: 34.1.0
+      photosuite:
+        specifier: 'link:'
+        version: 'link:'
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4.1.17
