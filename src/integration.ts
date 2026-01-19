@@ -23,8 +23,8 @@ export default function astroPhotosuite(options: PhotosuiteOptions) {
       "astro:config:setup": ({ injectScript, updateConfig }: any) => {
         // 在 Astro 页面中注入初始化脚本
         // 自动引入样式文件，无需用户手动导入
-        const code = 
-                    `
+        const code =
+          `
                     import { photosuite } from 'photosuite/client';
                     const __opts = ${JSON.stringify(options)};
                     const __run = () => photosuite(__opts);

@@ -6,7 +6,7 @@
 /**
  * 确保元素被包裹在 photosuite-item 容器中
  * 
- * 如果目标元素（通常是 img 或 a.glightbox）尚未被 photosuite-item 包裹
+ * 如果目标元素（通常是 img 或 a[data-fancybox]）尚未被 photosuite-item 包裹
  * 则创建一个新的 div.photosuite-item 并将目标元素移动到其中
  * 
  * @param el - 需要检查或包裹的 DOM 元素
@@ -19,9 +19,9 @@ export function ensurePhotosuiteContainer(el: Element): HTMLElement {
 
   let target: Element = el;
 
-  // 如果元素是 img，且被 a.glightbox 包裹，则将整个链接作为目标进行包裹
+  // 如果元素是 img，且被 a[data-fancybox] 包裹，则将整个链接作为目标进行包裹
   // 这样可以保持链接的点击行为
-  if (el.tagName.toLowerCase() === "img" && p && p.tagName.toLowerCase() === "a" && p.classList.contains("glightbox")) {
+  if (el.tagName.toLowerCase() === "img" && p && p.tagName.toLowerCase() === "a" && p.hasAttribute("data-fancybox")) {
     target = p;
   }
 

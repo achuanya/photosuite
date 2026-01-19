@@ -9,7 +9,7 @@ import type { PhotosuiteOptions } from './types'
 /**
  * 初始化 Photosuite
  * 
- * 根据配置项动态加载并初始化各个功能模块（GLightbox, ImageAlts, Exif）
+ * 根据配置项动态加载并初始化各个功能模块（Fancybox, ImageAlts, Exif）
  * 
  * @param opts - Photosuite 配置项
  */
@@ -20,9 +20,9 @@ export function photosuite(opts: PhotosuiteOptions) {
     return;
   }
 
-  const selector = opts.selector ?? "a.glightbox";
+  const selector = opts.selector ?? "a[data-fancybox]";
   const gallery = opts.gallery ?? "markdown";
-  const enableLightbox = opts.glightbox ?? true;
+  const enableLightbox = opts.fancybox ?? true;
   const enableAlts = opts.imageAlts ?? true;
   const enableGrid = opts.imageGrid ?? true;
   const enableExif = opts.exif ?? true;
@@ -33,17 +33,15 @@ export function photosuite(opts: PhotosuiteOptions) {
 
     const tasks: Promise<any>[] = [];
 
-    // 如果启用灯箱功能，动态导入并初始化 glightbox 模块
+    // 如果启用灯箱功能，动态导入并初始化 fancybox 模块
     if (enableLightbox) {
       tasks.push(
-        import("./modules/glightbox").then((m) =>
-          m.initGlightboxModule({
+        import("./modules/fancybox").then((m) =>
+          m.initFancyboxModule({
             selector,
             scope,
             gallery,
-            options: opts.glightboxOptions,
-            cssUrl: opts.glightboxCssUrl,
-            jsUrl: opts.glightboxJsUrl,
+            options: opts.fancyboxOptions,
           })
         )
       );

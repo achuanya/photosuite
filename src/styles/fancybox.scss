@@ -1,0 +1,21 @@
+/**
+ * @file fancybox.scss
+ * @description Fancybox 样式覆盖，自定义灯箱组件外观
+ */
+
+/**
+ * 将导航按钮（上一张/下一张）改为方形
+ */
+.f-button.is-arrow {
+  --f-button-border-radius: 0;
+  border-radius: 0;
+}
+
+/**
+ * 当屏幕宽度小于 768px 时隐藏 Previous 和 Next 按钮
+ */
+@media (max-width: 767px) {
+  .f-button.is-arrow {
+    display: none !important;
+  }
+}

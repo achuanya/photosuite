@@ -6,15 +6,19 @@
 import './style.css'
 import { photosuite } from './index'
 
-// 初始化 Photosuite，启用所有功能并配置 GLightbox 选项
+// 初始化 Photosuite，启用所有功能并配置 Fancybox 选项
 photosuite({
   scope: 'main',
-  glightbox: true,
-  imageAlts: true,
-  imageGrid: true,
-  exif: true,
-  glightboxOptions: {
-    loop: true,
-    touchNavigation: true
-  }
+  // fancyboxOptions: {
+  //   Carousel: {
+  //     infinite: true,
+  //     Thumbs: false,
+  //     Toolbar: {
+  //       display: {
+  //         left: ["counter"],
+  //         right: ["autoplay", "close"]
+  //       },
+  //     },
+  //   }
+  // }
 })

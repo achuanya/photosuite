@@ -15,7 +15,7 @@ export interface PhotosuiteOptions extends ImageUrlOptions {
 
   /**
    * 图片选择器
-   * @default "a.glightbox"
+   * @default "a[data-fancybox]"
    * @description 用于选择需要应用 Photosuite 效果的图片或链接元素的选择器字符串
    */
   selector?: string;
@@ -23,22 +23,22 @@ export interface PhotosuiteOptions extends ImageUrlOptions {
   /**
    * 画廊名称
    * @default "markdown"
-   * @description GLightbox 画廊的分组名称，同一组名称的图片可以相互切换
+   * @description Fancybox 画廊的分组名称，同一组名称的图片可以相互切换
    */
   gallery?: string;
 
   /**
-   * 是否启用 GLightbox
+   * 是否启用 Fancybox
    * @default true
-   * @description 控制是否加载并启用 GLightbox 灯箱功能
+   * @description 控制是否加载并启用 Fancybox 灯箱功能
    */
-  glightbox?: boolean;
+  fancybox?: boolean;
 
   /**
-   * GLightbox 配置项
-   * @description 传递给 GLightbox 实例的原生配置对象
+   * Fancybox 配置项
+   * @description 传递给 Fancybox 实例的原生配置对象
    */
-  glightboxOptions?: Record<string, unknown>;
+  fancyboxOptions?: Record<string, unknown>;
 
   /**
    * 是否启用图片 Alt 标题
@@ -62,23 +62,12 @@ export interface PhotosuiteOptions extends ImageUrlOptions {
    */
   exif?: boolean | PhotosuiteExifOptions;
 
-  /**
-   * GLightbox CSS CDN 地址
-   * @description 自定义 GLightbox CSS 文件的加载地址
-   */
-  glightboxCssUrl?: string;
-
-  /**
-   * GLightbox JS CDN 地址
-   * @description 自定义 GLightbox JS 文件的加载地址
-   */
-  glightboxJsUrl?: string;
 }
 
 /**
- * GLightbox 模块初始化配置接口
+ * Fancybox 模块初始化配置接口
  */
-export interface GlightboxModuleOptions {
+export interface FancyboxModuleOptions {
   /**
    * 生效范围
    */
@@ -86,7 +75,7 @@ export interface GlightboxModuleOptions {
 
   /**
    * 图片选择器
-   * @description 需要绑定 GLightbox 事件的元素选择器
+   * @description 需要绑定 Fancybox 事件的元素选择器
    */
   selector: string;
 
@@ -97,19 +86,9 @@ export interface GlightboxModuleOptions {
   gallery: string;
 
   /**
-   * GLightbox 原生配置
+   * Fancybox 原生配置
    */
   options?: Record<string, unknown>;
-
-  /**
-   * CSS 资源地址
-   */
-  cssUrl?: string;
-
-  /**
-   * JS 资源地址
-   */
-  jsUrl?: string;
 }
 
 /**
