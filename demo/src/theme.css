@@ -1,0 +1,43 @@
+:root {
+  /* 页面背景色 */
+  --color-bg-body: #f5f5f7;
+  /* 导航栏背景色 */
+  --color-bg-nav: #f5f5f7;
+  /* 卡片背景色 */
+  --color-bg-card: #ffffff;
+  /* 代码块背景色 */
+  --color-bg-code: #1d1d1f;
+  /* 测试环境背景色 (引用卡片背景) */
+  --color-bg-testing: var(--color-bg-card);
+  /* 主要文本颜色 */
+  --color-text-main: #1d1d1f;
+  /* 导航栏文本颜色 */
+  --color-text-nav: #000000cc;
+  /* 次要文本颜色 */
+  --color-text-secondary: #86868b;
+  /* 柔和/静音文本颜色 */
+  --color-text-muted: #6e6e73;
+  /* 浅色文本 */
+  --color-text-light: #d2d2d7;
+  /* 更浅色文本 */
+  --color-text-lighter: #86868b;
+  /* 反色文本 (通常用于深色背景) */
+  --color-text-inverse: #ffffff;
+  /* 边框颜色 */
+  --color-border: #d2d2d7;
+  /* 强边框颜色 (引用代码块背景) */
+  --color-border-strong: var(--color-bg-code);
+  /* 主题色 */
+  --color-primary: #1d1d1f;
+  /* 主题色 (浅) */
+  --color-primary-light: #b3d9ff;
+  /* 主题色 (深) */
+  --color-primary-dark: #004499;
+  /* 深色按钮背景 */
+  --color-btn-dark: #272729;
+  --color-accent: #c1d73a;
+  --color-brand-gradient-from: var(--color-accent);
+  --color-brand-gradient-to: #57c249;
+  --color-hero-gradient-from: var(--color-accent);
+  --color-hero-gradient-to: #57c249;
+}

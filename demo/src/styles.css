@@ -1,0 +1,80 @@
+@import "tailwindcss";
+@import "./theme.css";
+
+@theme {
+  --font-sans: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  
+  /* 映射 theme.css 中的变量到 Tailwind */
+  --color-bg-body: var(--color-bg-body);
+  --color-bg-nav: var(--color-bg-nav);
+  --color-bg-card: var(--color-bg-card);
+  --color-bg-code: var(--color-bg-code);
+  --color-bg-testing: var(--color-bg-testing);
+  --color-text-main: var(--color-text-main);
+  --color-text-nav: var(--color-text-nav);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-muted: var(--color-text-muted);
+  --color-text-light: var(--color-text-light);
+  --color-text-lighter: var(--color-text-lighter);
+  --color-text-inverse: var(--color-text-inverse);
+  --color-border: var(--color-border);
+  --color-border-strong: var(--color-border-strong);
+  --color-primary: var(--color-primary);
+  --color-primary-light: var(--color-primary-light);
+  --color-primary-dark: var(--color-primary-dark);
+  --color-btn-dark: var(--color-btn-dark);
+  --color-accent: var(--color-accent);
+}
+
+/* 基础样式层 */
+@layer base {
+  ::selection {
+    background-color: var(--color-accent);
+  }
+
+  .brand-gradient-text {
+    background-image: linear-gradient(90deg, var(--color-brand-gradient-from), var(--color-brand-gradient-to));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hero-gradient-text {
+    background-image: linear-gradient(90deg, var(--color-hero-gradient-from), var(--color-hero-gradient-to));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .demo-content {
+    @apply md:grid md:grid-cols-[auto_1fr] md:items-baseline md:gap-x-4;
+  }
+
+  .demo-content > * {
+    @apply md:col-span-2;
+  }
+
+  .demo-content h2 {
+    @apply text-2xl font-bold text-primary md:col-span-1;
+  }
+
+  .demo-content h2:not(:first-of-type) {
+    @apply mt-24;
+  }
+
+  .demo-content h2 + p {
+    @apply text-text-muted mt-1 md:text-right md:col-span-1;
+  }
+
+  .demo-content h2 + p + p {
+    @apply mt-6;
+  }
+
+  .demo-content p img {
+    @apply w-full rounded-lg shadow-sm object-cover;
+  }
+
+  .demo-content h2:first-of-type + p + p img {
+    @apply rounded-2xl;
+  }
+}

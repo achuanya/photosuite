@@ -1,20 +1,29 @@
-![Sample Image](public/Wild-squirrel-feeding-interaction-with-hand-in-natural-forest.png)
+<div align="center">
+  <a href="/">
+    <img src="/public/logo.svg" alt="Photosuite" width="120" />
+    <br/>
+    <h1>Photosuite</h1>
+  </a>
 
-# Photosuite
+  <p>
+    <a href="https://photosuite.lhasa.icu">Official Website</a> •
+    <a href="https://github.com/achuanya/photosuite/releases">Latest Release</a> •
+    <a href="https://github.com/achuanya/photosuite/blob/main/Changelog.md">Changelog</a> •
+    <a href="./README.zh-CN.md">简体中文</a>
+  </p>
+</div>
 
-[Official Website](https://photosuite.lhasa.icu) • [Latest Release](https://github.com/achuanya/photosuite/releases) • [Changelog](https://github.com/achuanya/photosuite/main/Changelog.md) • [简体中文](./README.zh-CN.md)
-
-Photosuite is a simple yet feature-rich image integration tailored for independent blogs. It modularly integrates lightbox, EXIF data, path resolution, and more into a single, zero-config package. Out of the box, no tedious configuration required—give your blog images a fresh look with just one line of code!
+Photosuite is a simple yet feature-rich image integration tailored for independent blogs. It modularly integrates lightbox, EXIF data, path resolution, image grid, and more into a single, zero-config package. Out of the box, no tedious configuration required—give your blog images a fresh look with just one line of code!
 
 ## Features
 
-*   **Lightbox**: Customized and integrated GLightbox for a more minimalist and practical experience.
-*   **EXIF**: Integrated `exiftool-vendored.js` for fast execution and broad coverage.
-*   **Path Resolution**: Simply insert the filename, and it automatically resolves the absolute path.
-*   **Captions**: Automatically extracts the image's `alt` attribute to display as a caption.
-*   **Image Grid**: Automatically combines consecutive images (2-3) into a grid layout, each independently clickable.
-*   **Performance**: Purely static, modular features, loaded on demand.
-*   **Zero-Config Start**: Default settings satisfy most needs, while offering rich options for deep customization.
+*   **Lightbox**: Customized Fancybox integration, minimalist and practical.
+*   **Static EXIF**: Integrated `exiftool-vendored.js` supporting custom EXIF parameters.
+*   **Path Resolution**: Just insert the filename, and the path is auto-resolved at build time.
+*   **Captions**: Automatically displays image `alt` attributes as captions.
+*   **Image Grid**: Automatically groups consecutive images (2-3) into a grid layout, each independently clickable.
+*   **Extreme Performance**: All features are purely static, processed at build time, runtime dependency-free, modular, and loaded on demand.
+*   **Zero-Config**: Default settings satisfy most needs, with rich options for deep customization.
 
 ## Installation
 
@@ -46,7 +55,7 @@ export default defineConfig({
 });
 ```
 
-Once configured, Photosuite will automatically process all images in your Markdown/MDX files.
+Once configured, Photosuite will automatically process all images within your specified scope.
 
 ## Features & Configuration
 
@@ -121,30 +130,7 @@ photosuite({
 })
 ```
 
-### 3. Lightbox & Captions
-
-GLightbox has been customized to differ slightly from the official version.
-
-Supports native configuration, refer to: [GLightbox](https://github.com/achuanya/glightbox)
-
-```javascript
-photosuite({
-  // ...
-  // Disable lightbox
-  glightbox: false, 
-  
-  // Disable captions
-  imageAlts: false,
-
-  // Pass native GLightbox options
-  glightboxOptions: {
-    loop: true,
-    zoomable: true,
-  }
-})
-```
-
-### 4. Image Grid
+### 3. Image Grid
 
 Photosuite supports automatically combining consecutive images into a grid layout. When 2-3 images are placed adjacently in Markdown, they will be automatically combined into a grid, and each image remains independently clickable.
 
@@ -179,6 +165,37 @@ photosuite({
 })
 ```
 
+### 4. Lightbox & Captions
+
+Fancybox has been customized to differ slightly from the official version.
+
+Supports native configuration, refer to: [Fancybox](https://fancyapps.com/fancybox/)
+
+```javascript
+photosuite({
+  // ...
+  // Disable lightbox
+  fancybox: false, 
+  
+  // Disable captions
+  imageAlts: false,
+
+  // Fancybox native options
+  fancyboxOptions: {
+    Carousel: {
+      infinite: false,
+      Toolbar: {
+        display: {
+          left: ["infobar"],
+          middle: [],
+          right: ["slideshow", "download", "thumbs", "close"],
+        },
+      },
+    },
+  }
+})
+```
+
 ## Complete Configuration Reference
 
 ### Parameter List
@@ -186,15 +203,15 @@ photosuite({
 | Parameter | Type | Required | Default | Description |
 | :--- | :--- | :---: | :--- | :--- |
 | `scope` | `string` | ✅ | - | **Scope**. CSS selector, only processes images within this container. Supports multiple selectors separated by commas. |
-| `selector` | `string` | ❌ | `"a.glightbox"` | **Image Selector**. Specifies which images need lightbox effect. |
+| `selector` | `string` | ❌ | `"a[data-fancybox]"` | **Image Selector**. Specifies which images need lightbox effect. |
 | `imageBase` | `string` | ❌ | - | **Base Image URL**. Prefix used for splicing relative paths. |
 | `imageDir` | `string` | ❌ | `"imageDir"` | **Directory Field Name**. Field name in Markdown Frontmatter to specify image subdirectory. |
 | `fileDir` | `boolean` | ❌ | `false` | **Filename Archiving**. Whether to automatically use Markdown filename as image subdirectory. |
-| `glightbox` | `boolean` | ❌ | `true` | **Enable Lightbox**. Whether to load GLightbox module. |
+| `fancybox` | `boolean` | ❌ | `true` | **Enable Lightbox**. Whether to load Fancybox module. |
 | `imageAlts` | `boolean` | ❌ | `true` | **Enable Captions**. Whether to display `alt` attribute as image caption. |
 | `imageGrid` | `boolean` | ❌ | `true` | **Enable Image Grid**. Whether to combine consecutive images (2-3) into a grid layout. |
 | `exif` | `boolean` \| `object` | ❌ | `true` | **Enable EXIF**. `false` to disable, `true` for default config, or pass object to customize via fields:[]. |
-| `glightboxOptions` | `object` | ❌ | - | **Native Lightbox Config**. Configuration items passed through to GLightbox. |
+| `fancyboxOptions` | `object` | ❌ | - | **Native Lightbox Config**. Configuration items passed through to Fancybox. |
 
 ### Full Configuration Code Example
 
@@ -213,7 +230,7 @@ photosuite({
   // ----------------
   
   // Basic Settings
-  selector: 'a.glightbox',
+  selector: 'a[data-fancybox]',
   
   // Path Resolution
   imageBase: '', 
@@ -221,7 +238,7 @@ photosuite({
   fileDir: false,
 
   // Feature Toggles
-  glightbox: true,
+  fancybox: true,
   imageAlts: true,
   imageGrid: true,
   
@@ -240,11 +257,25 @@ photosuite({
     separator: ' · '      // Separator
   },
 
-  // Native GLightbox Configuration
-  glightboxOptions: {
-    loop: true,
-    touchNavigation: true,
-    closeOnOutsideClick: true
+  // Fancybox native options
+  fancyboxOptions: {
+    wheel: "slide", // Enable wheel navigation
+    Hash: false,    // Disable URL hash
+    Html: { // HTML content configuration
+      video: { // Video configuration
+        autoplay: false, // Disable video autoplay
+      },
+    },
+    Carousel: { // Carousel configuration
+      Thumbs: false, // Disable thumbnails
+      infinite: false, // Disable infinite loop
+      Toolbar: { // Toolbar configuration
+        display: { // Display items configuration
+          left: ["counter"], // Left side: page counter
+          right: ["autoplay", "close"], // Right side: autoplay and close buttons
+        },
+      },
+    },
   }
 })
 ```

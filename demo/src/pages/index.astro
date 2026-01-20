@@ -1,0 +1,109 @@
+---
+import "photosuite/dist/photosuite.css";
+import "../styles.css";
+import DemoContent from "../content/index.md";
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Photosuite Demo</title>
+	</head>
+	<!-- 页面主体：设置背景色、最小高度、主文本色、字体及选中样式 -->
+	<body class="bg-bg-body min-h-screen text-text-main font-sans">
+		<!-- 导航栏：背景模糊效果 -->
+		<nav class="w-full bg-bg-nav/80 backdrop-blur-md supports-[backdrop-filter]:bg-bg-nav/60">
+			<div class="relative mx-auto flex h-[80px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+				<!-- 左侧 Logo -->
+				<a href="/" class="relative z-10 flex items-center gap-2 transition-opacity">
+					<img src="/favicon.svg" alt="Photosuite" class="h-7 w-7" />
+					<span class="brand-gradient-text text-xl font-bold hidden sm:block">Photosuite</span>
+				</a>
+
+				<!-- 中间链接 (仅在大屏显示) -->
+				<div class="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 md:flex items-center gap-8">
+					<a href="" class="text-lg font-medium text-text-nav hover:text-accent transition-colors">Documentation</a>
+					<a href="https://blog.lhasa.icu/" target="_blank" class="text-lg font-medium text-text-nav hover:text-accent transition-colors">Blog</a>
+					<a href="https://github.com/achuanya/photosuite/blob/main/Changelog.md" target="_blank" class="text-lg font-medium text-text-nav hover:text-accent transition-colors">Changelog</a>
+					<a href="" class="text-lg font-medium text-text-nav hover:text-accent transition-colors">Guestbook</a>
+				</div>
+
+				<!-- 右侧 Github 图标 -->
+				<div class="relative z-10 flex items-center gap-4">
+					<a href="https://github.com/achuanya/photosuite" target="_blank" class="text-text-nav hover:text-text-main transition-colors" aria-label="GitHub">
+						<img src="/svg/github.svg" class="h-6 w-6" alt="GitHub" />
+					</a>
+				</div>
+			</div>
+		</nav>
+
+		<main id="main" class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+			<!-- 顶部 Hero 区域 -->
+			<div class="mx-auto max-w-3xl text-center mb-20 flex flex-col items-center">
+				<!-- 测试版徽章 -->
+				<a href="https://github.com/achuanya/photosuite" target="_blank" class="mb-8 h-9 group w-fit flex items-center justify-center gap-0 bg-bg-testing rounded-full">
+					<div class="px-3 h-full w-fit flex items-center gap-2 text-text-inverse bg-btn-dark rounded-full">
+						<span class="text-sm font-light">Photosuite Beta</span>
+						<svg width="16" height="16" class="block sm:hidden" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="m16.2 11-5.4-5.4 1.4-1.4L20 12l-7.8 7.8-1.4-1.4 5.4-5.4H4v-2z"></path></svg>
+					</div>
+					<div class="hidden sm:flex px-3 h-full w-fit items-center justify-center gap-2 text-text-secondary">
+						<span class="text-sm font-light">Now testing!</span>
+						<svg width="16" height="16" viewBox="0 0 24 24" class="fill-current" aria-hidden="true"><path d="m16.2 11-5.4-5.4 1.4-1.4L20 12l-7.8 7.8-1.4-1.4 5.4-5.4H4v-2z"></path></svg>
+					</div>
+				</a>
+
+				<!-- 主标题 -->
+				<h1 class="text-[3.5rem] font-bold leading-[1.1] tracking-tight text-text-main sm:text-[rem] mb-6">
+					Astro Photosuite <br />
+					<span class="hero-gradient-text">Zero-Config Integration</span>
+				</h1>
+				<!-- 副标题/描述 -->
+				<p class="mt-4 text-xg leading-8 text-text-muted">
+					An all-in-one Astro integration for your blog images. Features automatic lightboxes, EXIF extraction, smart grids, and effortless path resolution.
+				</p>
+
+				<!-- 按钮组 -->
+				<div class="mt-10 grid grid-rows-2 gap-2 w-[277px]">
+					<!-- Get Started 按钮 -->
+					<a href="https://github.com/achuanya/photosuite" target="_blank" class="group w-full h-[41px] px-4 inline-flex items-center justify-center gap-2 rounded-full border border-border-strong bg-bg-nav hover:bg-btn-dark transition-colors shadow-sm">
+						<span class="text-text-main font-normal text-base group-hover:text-text-inverse transition-colors">
+							Get Started
+						</span>
+					</a>
+					<!-- npm install 复制框 -->
+					<div class="relative w-full h-[41px] px-4 bg-bg-code rounded-xl flex items-center justify-between group cursor-pointer" onclick="const textEl=this.querySelector('code'); const txt=(textEl?.textContent||'').trim()||'npm install photosuite'; navigator.clipboard.writeText(txt).then(()=>{ const msg=this.querySelector('.copied-msg'); msg.style.opacity='1'; setTimeout(()=>msg.style.opacity='0',2000); });">
+						<div class="flex items-center gap-3 overflow-hidden">
+							<svg width="12" height="12" viewBox="0 0 24 24" class="text-text-lighter -rotate-90 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+								<polyline points="6 9 12 15 18 9"></polyline>
+							</svg>
+							<code class="font-mono font-light text-sm text-text-light whitespace-nowrap">npm install photosuite</code>
+						</div>
+						<div class="flex items-center relative">
+							<button class="text-text-lighter hover:text-text-inverse transition-colors group-hover:text-accent" title="Copy to clipboard">
+								<svg xmlns="http://www.w3.org/2000/svg" class="size-5 transition-transform group-hover:scale-105" viewBox="0 0 24 24" fill="currentColor">
+									<path d="M7 6V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1.001 1.001 0 0 1 3 21l.003-14c0-.552.45-1 1.006-1zM5.002 8L5 20h10V8zM9 6h8v10h2V4H9z"></path>
+								</svg>
+							</button>
+							<span class="copied-msg absolute right-0 top-full mt-2 bg-black/80 text-text-inverse text-xs px-2 py-1 rounded opacity-0 transition-opacity pointer-events-none whitespace-nowrap">Copied!</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 演示内容 -->
+			<div class="demo-content max-w-4xl mx-auto">
+				<DemoContent />
+			</div>
+
+			<!-- 页脚 -->
+			<footer class="mt-24 border-t border-border pt-10 pb-6 text-center">
+				<div class="prose prose-sm mx-auto text-text-muted">
+					&copy;2026 Photosuite. Open source MIT License.
+				</div>
+			</footer>
+		</main>
+	</body>
+</html>

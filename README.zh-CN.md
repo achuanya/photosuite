@@ -1,19 +1,28 @@
-![示例图片](public/Wild-squirrel-feeding-interaction-with-hand-in-natural-forest.png)
+<div align="center">
+  <a href="/">
+    <img src="/public/logo.svg" alt="Photosuite" width="120" />
+    <br/>
+    <h1>Photosuite</h1>
+  </a>
 
-# Photosuite
+  <p>
+    <a href="https://photosuite.lhasa.icu">官方网站</a> •
+    <a href="https://github.com/achuanya/photosuite/releases">最新版本</a> •
+    <a href="https://github.com/achuanya/photosuite/blob/main/Changelog.md">更新日志</a> •
+    <a href="./README.md">English</a>
+  </p>
+</div>
 
-[官方网站](https://photosuite.lhasa.icu) • [最新版本](https://github.com/achuanya/photosuite/releases) • [更新日志](https://github.com/achuanya/photosuite/main/Changelog.md) • [English](./README.md)
-
-Photosuite 是一款简单易用但功能丰富的图像插件，它将灯箱、EXIF、路径补全等功能，模块化整合在一个零配置的插件中。开箱即用，无需繁琐的配置，一行代码即可让您的图片焕然一新！
+Photosuite 是一款简单易用但功能丰富的图像插件，它将灯箱、EXIF、路径补全、拼图等功能，模块化整合在一个零配置的插件中。开箱即用，无需繁琐的配置，一行代码即可让您的图片焕然一新！
 
 ## 特性
 
-*   **灯箱**：定制并集成 GLightbox 灯箱，更简约、更实用
-*   **EXIF**：集成 exiftool-vendored.js 执行快、覆盖广
-*   **路径**：只需要插入文件名，自动补全绝对路径
-*   **标题**：自动获取图片alt进行标题展示
-*   **拼图**：连续的图片（2-3张）自动组合成拼图布局，每张图片独立可点击
-*   **性能**：纯静态，功能模块化，按需加载
+*   **封装灯箱**：私人定制 Fancybox 灯箱，简约、实用
+*   **静态EXIF**：集成 exiftool-vendored.js 支持自定义 EXIF 参数
+*   **路径解析**：插入图片只需要写文件名，在构建时自动补全路径
+*   **图片说明**：自动获取图片 alt 进行图片说明展示
+*   **分组拼图**：连续的图片（2-3张）自动组合成拼图布局，每张图片独立可点击
+*   **极致性能**：以上纯静态，只在构建时完成，运行无依赖，功能模块化，按需加载
 *   **零配置启动**：默认配置即可满足绝大多数需求，同时也提供丰富的选项供深度定制
 
 ## 安装
@@ -46,7 +55,7 @@ export default defineConfig({
 });
 ```
 
-配置完成后，Photosuite 会自动处理您 Markdown/MDX 中的所有图片。
+配置完成后，Photosuite 会自动处理您指定范围内的所有图片。
 
 ## 功能详解与配置
 
@@ -121,30 +130,7 @@ photosuite({
 })
 ```
 
-### 3. 灯箱与标题
-
-GLightbox 经过我定制后，与官方版本有些许差异
-
-支持原生配置，可参考：[GLightbox](https://github.com/achuanya/glightbox)  
-
-```javascript
-photosuite({
-  // ...
-  // 关闭灯箱功能
-  glightbox: false, 
-  
-  // 关闭图片标题
-  imageAlts: false,
-
-  // GLightbox 原生配置传递
-  glightboxOptions: {
-    loop: true,
-    zoomable: true,
-  }
-})
-```
-
-### 4. 图片拼图
+### 2. 图片拼图
 
 Photosuite 支持自动将连续的图片组合成拼图布局。当 Markdown 中有 2-3 张图片紧挨着时，它们会自动组合成拼图，且每张图片都独立可点击。
 
@@ -179,6 +165,37 @@ photosuite({
 })
 ```
 
+### 4. 灯箱与标题
+
+Fancybox 经过我定制后，与官方版本有些许差异
+
+支持原生配置，可参考：[Fancybox](https://fancyapps.com/fancybox/)  
+
+```javascript
+photosuite({
+  // ...
+  // 关闭灯箱功能
+  fancybox: false,
+  
+  // 关闭图片标题
+  imageAlts: false,
+
+  // Fancybox 原生配置传递
+  fancyboxOptions: {
+    Carousel: {
+      infinite: false,
+      Toolbar: {
+        display: {
+          left: ["infobar"],
+          middle: [],
+          right: ["slideshow", "download", "thumbs", "close"],
+        },
+      },
+    },
+  }
+})
+```
+
 ## 完整配置参考
 
 ### 参数列表
@@ -186,15 +203,15 @@ photosuite({
 | 参数 | 类型 | 必填 | 默认值 | 说明 |
 | :--- | :--- | :---: | :--- | :--- |
 | `scope` | `string` | ✅ | - | **生效范围**。CSS 选择器，仅处理该容器内的图片，可包含多个选择器，用逗号分隔 |
-| `selector` | `string` | ❌ | `"a.glightbox"` | **图片选择器**。指定哪些图片需要启用灯箱效果 |
+| `selector` | `string` | ❌ | `"a[data-fancybox]"` | **图片选择器**。指定哪些图片需要启用灯箱效果 |
 | `imageBase` | `string` | ❌ | - | **图片基础 URL**。用于拼接相对路径的前缀 |
 | `imageDir` | `string` | ❌ | `"imageDir"` | **目录字段名**。在 Markdown Frontmatter 中指定图片目录的字段名称 |
 | `fileDir` | `boolean` | ❌ | `false` | **文件名归档**。是否自动使用 Markdown 文件名作为图片子目录 |
-| `glightbox` | `boolean` | ❌ | `true` | **启用灯箱**。是否加载 GLightbox 模块 |
+| `fancybox` | `boolean` | ❌ | `true` | **启用灯箱**。是否加载 Fancybox 模块 |
 | `imageAlts` | `boolean` | ❌ | `true` | **启用标题**。是否将 `alt` 属性显示为图片标题 |
 | `imageGrid` | `boolean` | ❌ | `true` | **启用拼图**。是否将连续的图片（2-3张）组合成拼图布局 |
 | `exif` | `boolean` \| `object` | ❌ | `true` | **启用 EXIF**。可通过 fields:[] 配置显示选项 |
-| `glightboxOptions` | `object` | ❌ | - | **灯箱原生配置**。透传给 GLightbox 的配置项 |
+| `fancyboxOptions` | `object` | ❌ | - | **灯箱原生配置**。透传给 Fancybox 的配置项 |
 
 ### 全部配置代码示例
 
@@ -213,7 +230,7 @@ photosuite({
   // ----------------
   
   // 基础设置
-  selector: 'a.glightbox',
+  selector: 'a[data-fancybox]',
   
   // 路径解析
   imageBase: '', 
@@ -221,7 +238,7 @@ photosuite({
   fileDir: false,
 
   // 功能开关
-  glightbox: true,
+  fancybox: true,
   imageAlts: true,
   imageGrid: true,
   
@@ -240,11 +257,25 @@ photosuite({
     separator: ' · '      // 分隔符
   },
 
-  // GLightbox 原生配置
-  glightboxOptions: {
-    loop: true,
-    touchNavigation: true,
-    closeOnOutsideClick: true
+  // Fancybox 原生配置传递
+  fancyboxOptions: {
+    wheel: "slide", // 支持滚轮切换
+    Hash: false,    // 禁用 URL 哈希
+    Html: {
+      video: {
+        autoplay: false, // 禁用视频自动播放
+      },
+    },
+    Carousel: {
+      Thumbs: false, // 关闭缩略图
+      infinite: false, // 禁用无限循环
+      Toolbar: {
+        display: {
+          left: ["counter"], // 左上角显示页码
+          right: ["autoplay", "close"], // 右上角显示自动播放和关闭按钮
+        },
+      },
+    },
   }
 })
 ```
