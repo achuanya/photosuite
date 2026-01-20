@@ -11,6 +11,15 @@ import DemoContent from "../content/index.md";
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Photosuite Demo</title>
+		{
+			import.meta.env.PROD && (
+				<script
+					defer
+					src="https://analytics.lhasa.icu/script.js"
+					data-website-id="a7a739f5-daba-4706-8309-9902ac653e96"
+				/>
+			)
+		}
 	</head>
 	<!-- 页面主体：设置背景色、最小高度、主文本色、字体及选中样式 -->
 	<body class="bg-bg-body min-h-screen text-text-main font-sans">
