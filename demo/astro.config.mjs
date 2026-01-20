@@ -8,7 +8,7 @@ export default defineConfig({
     allowedHosts: [
       'photosuite.lhasa.icu'
     ],
-    port: 6666
+    port: 4444
   },
   integrations: [
     photosuite({
