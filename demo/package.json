@@ -3,9 +3,9 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "astro dev --port 6666",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "astro preview --port 6666",
     "astro": "astro"
   },
   "dependencies": {
