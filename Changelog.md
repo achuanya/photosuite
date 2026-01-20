@@ -1,10 +1,18 @@
-## [v0.1.3](https://github.com/achuanya/photosuite/compare/v0.1.2...v0.1.3) (2026-01-18)
+## [v0.2.0](https://github.com/achuanya/photosuite/compare/v0.1.2...v0.2.0) (2026-01-18)
 
 ### 新增功能
 
 - **自动拼图**
   - 不引入新语法，通过连续插入图片即可自动生成拼图
   - 自动处理图片布局，支持混合比例图片等高对齐（最多 3 张）
+
+- **灯箱组件更换**
+  - 核心组件由 GLightbox 更换为 Fancybox (v6.1.7)
+
+- **产品页面**
+  - 引入 Astro 6 框架，响应式设计
+  - 添加 Artalk UI 评论系统
+  - 添加 Umami 统计分析
 
 ---
 

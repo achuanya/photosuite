@@ -20,6 +20,8 @@ import DemoContent from "../content/index.md";
 				/>
 			)
 		}
+		<link href="https://cos.lhasa.icu/dist/artalk/Artalk.css" rel="stylesheet" />
+		<script is:inline src="https://cos.lhasa.icu/dist/artalk/Artalk.js" defer></script>
 	</head>
 	<!-- 页面主体：设置背景色、最小高度、主文本色、字体及选中样式 -->
 	<body class="bg-bg-body min-h-screen text-text-main font-sans">
@@ -107,6 +109,10 @@ import DemoContent from "../content/index.md";
 				<DemoContent />
 			</div>
 
+			<div class="mt-24 max-w-4xl mx-auto">
+				<div id="Comments"></div>
+			</div>
+
 			<!-- 页脚 -->
 			<footer class="mt-24 border-t border-border pt-10 pb-6 text-center">
 				<div class="prose prose-sm mx-auto text-text-muted">
@@ -116,3 +122,24 @@ import DemoContent from "../content/index.md";
 		</main>
 	</body>
 </html>
+<script is:inline data-astro-rerun>
+	const initArtalk = () => {
+		if (!window.Artalk) return false;
+		window.Artalk.init({
+			el: "#Comments",
+			server: "https://artalk.lhasa.icu",
+			site: "Photosuite Demo",
+			pageKey: window.location.pathname,
+			vote: false,
+		});
+		return true;
+	};
+
+	if (!initArtalk()) {
+		let tries = 0;
+		const timer = window.setInterval(() => {
+			tries += 1;
+			if (initArtalk() || tries >= 100) window.clearInterval(timer);
+		}, 100);
+	}
+</script>
