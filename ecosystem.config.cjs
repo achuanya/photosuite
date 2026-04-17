@@ -4,7 +4,7 @@ module.exports = {
       name: "photosuite",
       cwd: `${__dirname}/demo`,
       script: "pnpm",
-      args: "run preview -- --port 44444 --allowed-hosts=photosuite.lhasa.icu",
+      args: "run preview --port 44444 --host 0.0.0.0 --allowed-hosts photosuite.lhasa.icu",
       env: {
         NODE_ENV: "production",
       },
