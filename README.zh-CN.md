@@ -17,13 +17,13 @@ Photosuite 是一款简单易用但功能丰富的图像插件，它将灯箱、
 
 ## 特性
 
-*   **封装灯箱**：私人定制 Fancybox 灯箱，简约、实用
-*   **静态EXIF**：集成 exiftool-vendored.js 支持自定义 EXIF 参数
-*   **路径解析**：插入图片只需要写文件名，在构建时自动补全路径
-*   **图片说明**：自动获取图片 alt 进行图片说明展示
-*   **分组拼图**：连续的图片（2-3张）自动组合成拼图布局，每张图片独立可点击
-*   **极致性能**：以上纯静态，只在构建时完成，运行无依赖，功能模块化，按需加载
-*   **零配置启动**：默认配置即可满足绝大多数需求，同时也提供丰富的选项供深度定制
+- **封装灯箱**：私人定制 Fancybox 灯箱，简约、实用
+- **静态EXIF**：集成 exiftool-vendored.js 支持自定义 EXIF 参数
+- **路径解析**：插入图片只需要写文件名，在构建时自动补全路径
+- **图片说明**：自动获取图片 alt 进行图片说明展示
+- **分组拼图**：连续的图片（2-3张）自动组合成拼图布局，每张图片独立可点击
+- **极致性能**：以上纯静态，只在构建时完成，运行无依赖，功能模块化，按需加载
+- **零配置启动**：默认配置即可满足绝大多数需求，同时也提供丰富的选项供深度定制
 
 ## 安装
 
@@ -73,6 +73,7 @@ photosuite({
 ```
 
 **Markdown 写法：**
+
 ```markdown
 ![我的照片](photo.jpg) 
 <!-- 最终解析为: https://cdn.example.com/images/photo.jpg -->
@@ -137,12 +138,14 @@ Photosuite 支持自动将连续的图片组合成拼图布局。当 Markdown �
 **Markdown 写法：**
 
 两张图片拼图：
+
 ```markdown
 ![图片1](photo1.jpg)
 ![图片2](photo2.jpg)
 ```
 
 三张图片拼图：
+
 ```markdown
 ![图片1](photo1.jpg)
 ![图片2](photo2.jpg)
@@ -150,6 +153,7 @@ Photosuite 支持自动将连续的图片组合成拼图布局。当 Markdown �
 ```
 
 **特性：**
+
 - 自动检测连续的图片（2-3张）
 - 每张图片宽度一致，均分容器宽度
 - 每张图片独立可点击，都支持灯箱功能
@@ -157,6 +161,7 @@ Photosuite 支持自动将连续的图片组合成拼图布局。当 Markdown �
 - 响应式设计：移动端自动切换为单列布局
 
 **配置：**
+
 ```javascript
 photosuite({
   // ...
@@ -169,7 +174,7 @@ photosuite({
 
 Fancybox 经过我定制后，与官方版本有些许差异
 
-支持原生配置，可参考：[Fancybox](https://fancyapps.com/fancybox/)  
+支持原生配置，可参考：[Fancybox](https://fancyapps.com/fancybox/)
 
 ```javascript
 photosuite({
@@ -200,18 +205,18 @@ photosuite({
 
 ### 参数列表
 
-| 参数 | 类型 | 必填 | 默认值 | 说明 |
-| :--- | :--- | :---: | :--- | :--- |
-| `scope` | `string` | ✅ | - | **生效范围**。CSS 选择器，仅处理该容器内的图片，可包含多个选择器，用逗号分隔 |
-| `selector` | `string` | ❌ | `"a[data-fancybox]"` | **图片选择器**。指定哪些图片需要启用灯箱效果 |
-| `imageBase` | `string` | ❌ | - | **图片基础 URL**。用于拼接相对路径的前缀 |
-| `imageDir` | `string` | ❌ | `"imageDir"` | **目录字段名**。在 Markdown Frontmatter 中指定图片目录的字段名称 |
-| `fileDir` | `boolean` | ❌ | `false` | **文件名归档**。是否自动使用 Markdown 文件名作为图片子目录 |
-| `fancybox` | `boolean` | ❌ | `true` | **启用灯箱**。是否加载 Fancybox 模块 |
-| `imageAlts` | `boolean` | ❌ | `true` | **启用标题**。是否将 `alt` 属性显示为图片标题 |
-| `imageGrid` | `boolean` | ❌ | `true` | **启用拼图**。是否将连续的图片（2-3张）组合成拼图布局 |
-| `exif` | `boolean` \| `object` | ❌ | `true` | **启用 EXIF**。可通过 fields:[] 配置显示选项 |
-| `fancyboxOptions` | `object` | ❌ | - | **灯箱原生配置**。透传给 Fancybox 的配置项 |
+| 参数                | 类型                    |  必填 | 默认值                  | 说明                                            |
+| :---------------- | :-------------------- | :-: | :------------------- | :-------------------------------------------- |
+| `scope`           | `string`              |  ✅  | -                    | **生效范围**。CSS 选择器，仅处理该容器内的图片，可包含多个选择器，用逗号分隔    |
+| `selector`        | `string`              |  ❌  | `"a[data-fancybox]"` | **图片选择器**。指定哪些图片需要启用灯箱效果                      |
+| `imageBase`       | `string`              |  ❌  | -                    | **图片基础 URL**。用于拼接相对路径的前缀                      |
+| `imageDir`        | `string`              |  ❌  | `"imageDir"`         | **目录字段名**。在 Markdown Frontmatter 中指定图片目录的字段名称 |
+| `fileDir`         | `boolean`             |  ❌  | `false`              | **文件名归档**。是否自动使用 Markdown 文件名作为图片子目录          |
+| `fancybox`        | `boolean`             |  ❌  | `true`               | **启用灯箱**。是否加载 Fancybox 模块                     |
+| `imageAlts`       | `boolean`             |  ❌  | `true`               | **启用标题**。是否将 `alt` 属性显示为图片标题                  |
+| `imageGrid`       | `boolean`             |  ❌  | `true`               | **启用拼图**。是否将连续的图片（2-3张）组合成拼图布局                |
+| `exif`            | `boolean` \| `object` |  ❌  | `true`               | **启用 EXIF**。可通过 fields:\[] 配置显示选项             |
+| `fancyboxOptions` | `object`              |  ❌  | -                    | **灯箱原生配置**。透传给 Fancybox 的配置项                  |
 
 ### 全部配置代码示例
 
@@ -306,8 +311,12 @@ photosuite({
 
 [![](https://contrib.rocks/image?repo=achuanya/photosuite)](https://github.com/achuanya/photosuite/graphs/contributors)
 
-## 支持者们
-[![Stargazers repo roster for @achuanya/photosuite](https://reporoster.com/stars/achuanya/photosuite)](https://github.com/achuanya/photosuite/stargazers)
+## 他们在用
+
+- [Frevia](https://www.frevia.site)
+- [ZhiJun's Blog](https://blog.zhijun.io)
+
+如果你也在使用 Photosuite，可自行编辑加入！
 
 ## 开源许可协议
 

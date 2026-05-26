@@ -305,8 +305,12 @@ But we insist on taking root in this soil, letting thought be free, and letting 
 
 [![](https://contrib.rocks/image?repo=achuanya/photosuite)](https://github.com/achuanya/photosuite/graphs/contributors)
 
-## Supporters
-[![Stargazers repo roster for @achuanya/photosuite](https://reporoster.com/stars/achuanya/photosuite)](https://github.com/achuanya/photosuite/stargazers)
+## Users
+
+- [Frevia](https://www.frevia.site)
+- [ZhiJun's Blog](https://blog.zhijun.io)
+
+If you are using using Photosuite, please edit this file to add your blog.
 
 ## License
 
