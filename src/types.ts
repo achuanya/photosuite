@@ -138,4 +138,34 @@ export interface PhotosuiteExifOptions {
    * @default " · "
    */
   separator?: string;
+
+  /**
+   * 是否启用磁盘缓存
+   * @default true
+   * @description 将提取到的 EXIF 数据持久化到 node_modules/.cache/photosuite/ 下，
+   * 以图片 URL 为键。CDN 图片（文件名含时间戳，内容不可变）在后续 dev 启动时直接命中缓存，
+   * 避免重复联网下载与解析。设为 false 可禁用缓存。
+   */
+  cache?: boolean;
+
+  /**
+   * 远程图片下载的最大并发数
+   * @default 6
+   * @description 限制同时进行的图片下载数量，避免 TLS 连接风暴导致 ECONNRESET。
+   */
+  concurrency?: number;
+
+  /**
+   * 单次下载请求的超时时间（毫秒）
+   * @default 15000
+   */
+  timeout?: number;
+
+  /**
+   * 下载时仅请求的文件头字节数
+   * @default 131072
+   * @description 通过 HTTP Range 请求仅下载文件头部（JPEG 的 EXIF 位于文件开头），
+   * 大幅减少传输量。设为 0 则下载完整文件。
+   */
+  headerBytes?: number;
 }

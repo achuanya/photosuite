@@ -1,3 +1,23 @@
+## [v0.3.0](https://github.com/achuanya/photosuite/compare/v0.2.0...v0.3.0) (2026-06-07)
+
+### 性能优化
+
+- **EXIF 提取大幅提速**，解决每次 `pnpm dev` 长时间等待的问题
+  - 新增持久化磁盘缓存（`node_modules/.cache/photosuite/`），以图片 URL 为键。
+    CDN 图片内容不可变，后续 dev 启动直接命中缓存，跳过联网下载与解析
+  - 下载改用 HTTP Range 仅获取文件头部（JPEG 的 EXIF 位于开头），大幅减少传输量
+  - 新增下载并发限制（默认 6）+ 请求超时 + 失败重试，修复并发联网导致的 `ECONNRESET`
+  - 对「已解析但无可用 EXIF」的图片做负缓存，避免重复下载；网络/HTTP 错误不进入负缓存，下次自动重试
+
+### 新增配置
+
+- `exif.cache`：是否启用磁盘缓存（默认 `true`）
+- `exif.concurrency`：远程图片最大下载并发数（默认 `6`）
+- `exif.timeout`：单次下载超时毫秒数（默认 `15000`）
+- `exif.headerBytes`：下载的文件头字节数，`0` 表示下载完整文件（默认 `131072`）
+
+---
+
 ## [v0.2.0](https://github.com/achuanya/photosuite/compare/v0.1.2...v0.2.0) (2026-01-18)
 
 ### 新增功能
