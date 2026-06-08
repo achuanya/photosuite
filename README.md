@@ -130,6 +130,39 @@ photosuite({
 })
 ```
 
+**Per-Page Filtering:**
+
+`scope` is a CSS selector that only governs *client-side* behavior (lightbox, captions, grid). The EXIF rehype plugin runs at build time on **every** Markdown file's `<img>` tags and rewrites their DOM into `.photosuite-item` + `.photosuite-exif`. If you have non-article pages (e.g. `about.md`) outside the `scope` container, you'll still see the injected EXIF markup in the HTML.
+
+To restrict EXIF injection to specific pages, use either of:
+
+**Option 1 Glob patterns in config**:
+
+```javascript
+photosuite({
+  scope: '#article',
+  exif: {
+    // Only process matched files; omit to process all
+    include: ['src/content/posts/**/*.md'],
+    // Skip matched files; takes precedence over include
+    exclude: ['src/content/pages/**/*.md'],
+  },
+})
+```
+
+Patterns are matched against paths relative to the project root, normalized with `/` separators. Supported wildcards: `*` (within a segment), `**` (across segments), `?` (single character).
+
+**Option 2 Frontmatter opt-out**:
+
+```yaml
+---
+title: About
+exif: false        # or: photosuite: false
+---
+```
+
+Pages with `exif: false`, `photosuite: false`, or `photosuite.exif: false` in frontmatter are skipped regardless of `include`/`exclude`.
+
 ### 3. Image Grid
 
 Photosuite supports automatically combining consecutive images into a grid layout. When 2-3 images are placed adjacently in Markdown, they will be automatically combined into a grid, and each image remains independently clickable.
@@ -254,7 +287,10 @@ photosuite({
       'ISO',              // ISO
       'DateTimeOriginal'  // Date Original
     ],
-    separator: ' · '      // Separator
+    separator: ' · ',     // Separator
+    // Per-page filtering (since v0.3.1)
+    include: undefined,   // string[] of glob patterns; omit to process all pages
+    exclude: undefined,   // string[] of glob patterns; takes precedence over include
   },
 
   // Fancybox native options
@@ -281,6 +317,9 @@ photosuite({
 ```
 
 ## FAQ
+
+**Q: My non-article pages (e.g. about page) still show EXIF info even though they're outside the `scope` container.**
+A: `scope` only controls *client-side* behavior. The EXIF rehype plugin runs at build time on every Markdown file. Restrict it via `exif.include` / `exif.exclude` glob patterns, or add `exif: false` to a page's frontmatter. See [EXIF Data Display § Per-Page Filtering](#2-exif-data-display).
 
 **Q: Why isn't EXIF data showing?**
 A: Please check the following:

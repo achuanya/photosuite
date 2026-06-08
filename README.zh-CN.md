@@ -131,6 +131,39 @@ photosuite({
 })
 ```
 
+**按页面过滤：**
+
+`scope` 是一个 CSS 选择器，只控制**客户端**行为（灯箱、标题、拼图）。EXIF rehype 插件在**构建时**对**所有** Markdown 中的 `<img>` 进行处理，将其改写为 `.photosuite-item` + `.photosuite-exif` 的 DOM 结构。如果你有非文章页（如 `about.md`）不在 `scope` 容器内，构建产物的 HTML 中仍然会出现 EXIF 注入的标签。
+
+要限定 EXIF 注入只作用于特定页面，可任选其一：
+
+**方式一 配置 glob 模式**：
+
+```javascript
+photosuite({
+  scope: '#article',
+  exif: {
+    // 仅处理匹配的文件；未配置时处理所有 Markdown
+    include: ['src/content/posts/**/*.md'],
+    // 跳过匹配的文件；优先级高于 include
+    exclude: ['src/content/pages/**/*.md'],
+  },
+})
+```
+
+模式相对于项目根目录解析，分隔符自动归一化为 `/`。支持通配符：`*`（段内任意字符）、`**`（跨段匹配）、`?`（单字符）。
+
+**方式二 Frontmatter 单页 opt-out**：
+
+```yaml
+---
+title: 关于
+exif: false        # 或：photosuite: false
+---
+```
+
+页面 frontmatter 含 `exif: false`、`photosuite: false` 或 `photosuite.exif: false` 时直接跳过，优先级高于 `include` / `exclude`。
+
 ### 2. 图片拼图
 
 Photosuite 支持自动将连续的图片组合成拼图布局。当 Markdown 中有 2-3 张图片紧挨着时，它们会自动组合成拼图，且每张图片都独立可点击。
@@ -259,7 +292,10 @@ photosuite({
       'ISO',              // 感光度
       'DateTimeOriginal'  // 拍摄时间
     ],
-    separator: ' · '      // 分隔符
+    separator: ' · ',     // 分隔符
+    // 按页面过滤（v0.3.1 起支持）
+    include: undefined,   // string[] glob 模式；未配置时处理所有页面
+    exclude: undefined,   // string[] glob 模式；优先级高于 include
   },
 
   // Fancybox 原生配置传递
@@ -287,13 +323,16 @@ photosuite({
 
 ## 常见问题
 
-**1.为什么 EXIF 信息没有显示？**
+**1.我的非文章页（如关于页）虽然不在 `scope` 容器内，为什么仍然带有 EXIF 信息？**
+A: `scope` 仅控制**客户端**行为。EXIF rehype 插件在**构建时**对所有 Markdown 生效。可使用 `exif.include` / `exif.exclude` glob 模式过滤，或在页面 frontmatter 中添加 `exif: false`。详见 [EXIF 信息展示 § 按页面过滤](#2-exif-信息展示)。
+
+**2.为什么 EXIF 信息没有显示？**
 A: 请检查以下几点：
 
 1. 图片是否包含 EXIF 信息（某些压缩工具会去除 EXIF）
 2. EXIF 信息至少有曝光三要素（焦距、光圈、快门速度）时，才会显示
 
-**2.我想只在某些图片上使用 Photosuite，怎么办？**
+**3.我想只在某些图片上使用 Photosuite，怎么办？**
 A: 您可以通过 CSS 选择器精确控制范围（多个选择器用逗号分隔）例如，只在类名为 `'#main` 的元素内部生效：
 
 ```javascript
@@ -302,6 +341,8 @@ photosuite({
   // ... 其他配置
 })
 ```
+
+注意：`scope` 只影响客户端行为；若希望服务端 EXIF 注入也只对特定页面生效，请使用 `exif.include` / `exif.exclude` 或 frontmatter opt-out（见上）。
 
 ## 贡献者们
 
