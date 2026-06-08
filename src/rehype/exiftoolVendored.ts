@@ -437,7 +437,12 @@ async function extractExif(src: string, file: any, opts: ResolvedExifOptions): P
 }
 
 /**
- * 根据 EXIF 数据改写 AST 节点（注入 EXIF 文本结构）
+ * 将 EXIF 文本写入 img 节点的 data-photosuite-exif 属性
+ *
+ * 不再于构建期直接生成 .photosuite-item / .photosuite-exif 的 DOM 结构，
+ * 而是把 EXIF 文本作为数据载荷挂在 img 上，由客户端在 scope 命中后再渲染。
+ * 这样 scope 不匹配的页面（例如未含 #article 的 about 页）就不会出现孤立的
+ * EXIF 条。
  *
  * @param node - img 节点
  * @param data - EXIF 数据
@@ -456,25 +461,8 @@ function renderExifNode(node: Node, data: ExifData, opts: ResolvedExifOptions): 
 
   const text = parts.join(opts.separator);
 
-  // 改写 AST 节点
-  const originalProps = { ...node.properties };
-
-  node.tagName = 'div';
-  node.properties = { className: ['photosuite-item'] };
-  node.children = [
-    {
-      type: 'element',
-      tagName: 'img',
-      properties: originalProps,
-      children: []
-    },
-    {
-      type: 'element',
-      tagName: 'div',
-      properties: { className: ['photosuite-exif'] },
-      children: [{ type: 'text', value: text }]
-    }
-  ];
+  if (!node.properties) node.properties = {};
+  node.properties['data-photosuite-exif'] = text;
 }
 
 /**

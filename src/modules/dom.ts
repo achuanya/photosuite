@@ -110,26 +110,29 @@ export function ensureCaption(container: HTMLElement): void {
 
 /**
  * 确保容器内存在 EXIF 显示条
- * 
- * 创建一个用于显示 EXIF 信息的占位元素
- * 
+ *
+ * 读取 img 上由 rehype 插件在构建期写入的 data-photosuite-exif 属性，
+ * 据此创建 .photosuite-exif 元素。把渲染时机推迟到客户端是为了让 scope
+ * 真正发挥作用 —— scope 不匹配时 photosuite 整体不会运行，
+ * 也就不会产生孤立的 EXIF 条。
+ *
  * @param container - 图片容器 (.photosuite-item)
  */
 export function ensureExif(container: HTMLElement): void {
   // 如果容器是拼图成员，则不创建 EXIF
   if (container.classList.contains("photosuite-grid-member")) return;
 
-  // 检查是否已存在 EXIF 条
-  const existing = container.querySelector(".photosuite-exif");
-  if (existing) {
-    // 如果存在但内容为空（只有空白字符），则将其移除
-    if (!existing.textContent?.trim()) {
-      existing.remove();
-    }
-    return;
-  }
+  // 已存在则不再创建
+  if (container.querySelector(".photosuite-exif")) return;
 
-  // 客户端不再自动创建空的 EXIF 条，
-  // 因为 EXIF 数据是在构建时由 rehype 插件提取并注入的。
-  // 如果构建时没有生成（例如因为缺少关键 EXIF 信息），客户端也不应显示空条。
+  const img = container.querySelector("img");
+  if (!img) return;
+
+  const text = (img.getAttribute("data-photosuite-exif") || "").trim();
+  if (!text) return;
+
+  const bar = document.createElement("div");
+  bar.className = "photosuite-exif";
+  bar.textContent = text;
+  container.appendChild(bar);
 }

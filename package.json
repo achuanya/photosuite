@@ -1,6 +1,6 @@
 {
   "name": "photosuite",
-  "version": "0.3.0",
+  "version": "0.5.0-beta",
   "description": "一款零配置的 Astro 图片增强集成，支持灯箱、自动拼图、EXIF 信息及路径解析。",
   "keywords": [
     "astro-integration",
