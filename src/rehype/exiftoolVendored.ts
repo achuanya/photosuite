@@ -42,12 +42,43 @@ interface ResolvedExifOptions {
   headerBytes: number;
   fields: string[];
   separator: string;
+  include: RegExp[] | null;
+  exclude: RegExp[];
 }
 
 /**
  * 默认展示字段
  */
 const DEFAULT_FIELDS = ['Model', 'LensModel', 'FocalLength', 'FNumber', 'ExposureTime', 'ISO', 'DateTimeOriginal'];
+
+/**
+ * 将一个 glob 模式编译为 RegExp，匹配相对于项目根目录的、以 `/` 为分隔符的路径
+ *
+ * 支持：`*` 匹配单段中的任意字符；`**` 跨段匹配；`?` 匹配单字符。
+ */
+function globToRegExp(glob: string): RegExp {
+  const norm = glob.replace(/\\/g, '/');
+  let pattern = '';
+  for (let i = 0; i < norm.length; i++) {
+    const c = norm[i];
+    if (c === '*') {
+      if (norm[i + 1] === '*') {
+        pattern += '.*';
+        i++;
+        if (norm[i + 1] === '/') i++;
+      } else {
+        pattern += '[^/]*';
+      }
+    } else if (c === '?') {
+      pattern += '[^/]';
+    } else if (/[.+^${}()|[\]\\]/.test(c)) {
+      pattern += '\\' + c;
+    } else {
+      pattern += c;
+    }
+  }
+  return new RegExp('^' + pattern + '$');
+}
 
 /**
  * 从插件配置解析出 EXIF 选项，未配置项使用默认值
@@ -57,6 +88,8 @@ const DEFAULT_FIELDS = ['Model', 'LensModel', 'FocalLength', 'FNumber', 'Exposur
  */
 function resolveExifOptions(options: any): ResolvedExifOptions {
   const e = (typeof options.exif === 'object' && options.exif !== null ? options.exif : {}) as any;
+  const compile = (list: unknown): RegExp[] | null =>
+    Array.isArray(list) && list.length > 0 ? list.filter((p) => typeof p === 'string').map(globToRegExp) : null;
   return {
     cache: e.cache !== false,
     concurrency: typeof e.concurrency === 'number' && e.concurrency > 0 ? e.concurrency : 6,
@@ -64,6 +97,8 @@ function resolveExifOptions(options: any): ResolvedExifOptions {
     headerBytes: typeof e.headerBytes === 'number' && e.headerBytes >= 0 ? e.headerBytes : 131072,
     fields: Array.isArray(e.fields) && e.fields.length > 0 ? e.fields : DEFAULT_FIELDS,
     separator: typeof e.separator === 'string' ? e.separator : ' · ',
+    include: compile(e.include),
+    exclude: compile(e.exclude) ?? [],
   };
 }
 
@@ -528,6 +563,29 @@ async function processNode(node: Node, file: any, opts: ResolvedExifOptions) {
 }
 
 /**
+ * 判断当前 Markdown 文件是否应被本插件处理
+ *
+ * 优先级：frontmatter opt-out > exclude > include
+ *
+ * - frontmatter 中 `exif: false` 或 `photosuite: false` 跳过该页
+ * - 配置了 exclude 且命中则跳过
+ * - 配置了 include 但未命中则跳过
+ */
+function shouldProcessFile(file: any, opts: ResolvedExifOptions): boolean {
+  const fm = file?.data?.astro?.frontmatter || file?.data?.frontmatter || {};
+  if (fm.exif === false || fm.photosuite === false) return false;
+  if (fm.photosuite && typeof fm.photosuite === 'object' && fm.photosuite.exif === false) return false;
+
+  const filePath: string = file?.path || file?.history?.[0] || '';
+  if (!filePath) return true;
+  const rel = path.relative(process.cwd(), filePath).replace(/\\/g, '/');
+
+  if (opts.exclude.length > 0 && opts.exclude.some((re) => re.test(rel))) return false;
+  if (opts.include && !opts.include.some((re) => re.test(rel))) return false;
+  return true;
+}
+
+/**
  * ExiftoolVendored Rehype 插件
  *
  * 遍历 HTML AST，查找 img 标签，提取 EXIF 信息并注入到 DOM 结构中
@@ -539,6 +597,8 @@ export function exiftoolVendored(options: any = {}) {
   const opts = resolveExifOptions(options);
 
   return async (tree: Node, file: any) => {
+    if (!shouldProcessFile(file, opts)) return;
+
     const promises: Promise<void>[] = [];
 
     const visit = (node: Node) => {

@@ -168,4 +168,20 @@ export interface PhotosuiteExifOptions {
    * 大幅减少传输量。设为 0 则下载完整文件。
    */
   headerBytes?: number;
+
+  /**
+   * 仅对匹配的 Markdown 文件启用 EXIF 注入
+   * @example ["src/content/posts/**\/*.md"]
+   * @description 相对于项目根目录的 glob 模式数组。未配置时对所有 Markdown 生效。
+   * 支持 `*`（匹配单段）、`**`（跨段匹配）、`?`（匹配单字符）。
+   */
+  include?: string[];
+
+  /**
+   * 跳过匹配的 Markdown 文件，不进行 EXIF 注入
+   * @example ["src/content/pages/**\/*.md"]
+   * @description 相对于项目根目录的 glob 模式数组。优先级高于 include。
+   * 也可在单个页面的 frontmatter 中设置 `exif: false` 或 `photosuite: false` 跳过该页。
+   */
+  exclude?: string[];
 }
